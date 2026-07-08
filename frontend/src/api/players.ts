@@ -19,3 +19,13 @@ export async function getSimilarPlayers(id: string) {
     const response = await API.get(`/players/${id}/similar`);
     return response.data;
 }
+
+export async function searchPlayers(query: string): Promise<PlayerCard[]> {
+    const response = await API.get("/players/search", {
+        params: {
+            q: query,
+        },
+    });
+
+    return response.data;
+}
