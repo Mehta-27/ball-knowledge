@@ -54,7 +54,7 @@ export default function PlayerDetailPage() {
 
             {similarPlayers.map((player) => (
                 <SimilarPlayerRow
-                    key={player.id}
+                    key={player.player_id}
                     player={player}
                 />
             ))}
