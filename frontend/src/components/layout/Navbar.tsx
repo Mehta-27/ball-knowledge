@@ -4,7 +4,8 @@ export default function Navbar() {
     return (
         <nav>
             <Link to="/">Home</Link>{" | "}
-            <Link to="/players">Players</Link>
+            <Link to="/players">Players</Link>{" | "}
+            <Link to="/teams">Teams</Link>
         </nav>
     );
 }
