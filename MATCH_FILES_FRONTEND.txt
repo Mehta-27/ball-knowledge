@@ -1,0 +1,261 @@
+================================================================================
+FILE: frontend/src/types/matches.ts
+================================================================================
+
+export interface MatchCard {
+    id: number;
+    home: string;
+    away: string;
+    score: string | null;
+    date: Date;
+    stage: string | null;
+}
+
+export interface TeamStatResponse {
+    team_id: number
+    team_name: string;
+    ball_possession: number;
+    expected_goals: number;
+    total_shots: number;
+    shots_on_target: number;
+    passes: number;
+    corners: number;
+    fouls: number;
+    tackles: number;
+    interceptions: number;
+    saves: number;
+    yellow_cards: number;
+    red_cards: number;
+}
+
+export interface PlayerStatInMatch {
+    player_name: string;
+    is_goalkeeper: boolean
+    rating: number
+    minutes_played: number;
+    goals: number
+    assists: number
+    xG: number;
+    xA: number;
+    total_shots: number;
+    shots_on_target: number;
+    touches: number;
+    passes: number;
+    tackles: number;
+    interceptions: number;
+    duels_won: number;
+    saves: number;
+}
+
+
+export interface MatchDetail {
+    id: number
+    home_team: string;
+    away_team: string;
+    home_score: number
+    away_score: number
+    venue: string | null
+    stage: string | null
+    attendance: number | null
+    date: Date
+    home_team_stats: TeamStatResponse | null
+    away_team_stats: TeamStatResponse | null
+    player_stats: PlayerStatInMatch[]
+}
+
+================================================================================
+FILE: frontend/src/api/matches.ts
+================================================================================
+
+import axios from "axios";
+import type { MatchCard, MatchDetail } from "../types/matches";
+
+const API = axios.create({
+    baseURL: "http://127.0.0.1:8000",
+});
+
+export async function getMatches(): Promise<MatchCard[]> {
+    const response = await API.get("/Matches");
+    return response.data;
+}
+
+export async function getMatch(id: string): Promise<MatchDetail> {
+    const response = await API.get(`/Matches/${id}`)
+    return response.data
+}
+
+export async function getMatchDetail(id: string): Promise<MatchDetail> {
+    const response = await API.get(`/Matches/${id}/detail`)
+    return response.data
+}
+
+export async function searchMatches(query: string): Promise<MatchCard[]> {
+    const response = await API.get("/matches/search", {
+        params: {
+            q: query,
+        }
+    });
+    return response.data;
+}
+
+================================================================================
+FILE: frontend/src/pages/Matches/Matches.tsx
+================================================================================
+
+import { useEffect, useState } from "react";
+import { getMatches } from "../../api/matches";
+import MatchCard from "../../components/match/MatchCard";
+import type { MatchCard as MatchCardType } from "../../types/matches";
+import { searchMatches } from "../../api/matches";
+
+export default function Matches() {
+    const [matches, setMatches] = useState<MatchCardType[]>([]);
+    const [query, setQuery] = useState("");
+
+    useEffect(() => {
+        async function fetchMatches() {
+            if (query.trim() === "") {
+                const data = await getMatches();
+                setMatches(data);
+            } else {
+                const data = await searchMatches(query);
+                setMatches(data);
+            }
+        };
+        fetchMatches()
+    }, [query]);
+
+    return (
+        <>
+            <input
+                type="text"
+                placeholder="search matches......."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+            />
+
+            <p>{query}</p>
+            <h1> Matches </h1>
+
+            {matches.map((match) => (
+                <MatchCard
+                    key={match.id}
+                    match={match}
+                />
+            ))}
+        </>
+    )
+}
+
+
+================================================================================
+FILE: frontend/src/pages/MatchDetail/MatchDetail.tsx
+================================================================================
+
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { getMatch } from "../../api/matches";
+import type { MatchDetail } from "../../types/matches";
+
+export default function MatchDetail() {
+    const { id } = useParams();
+
+    const [match, setMatch] = useState<MatchDetail | null>(null);
+
+    useEffect(() => {
+        async function fetchMatches() {
+            if (!id) return;
+
+            const data = await getMatch(id);
+            setMatch(data);
+        }
+
+        fetchMatches();
+    }, [id]);
+    if (!match) {
+        return <h1>Loading........</h1>;
+    }
+
+    return (
+        <>
+            <h1>{match.home_team} vs {match.away_team}</h1>
+
+            <h2>Venue: {match.venue}</h2>
+            <h2>Stage: {match.stage}</h2>
+            <h2>Attendance: {match.attendance}</h2>
+            <h2>Date: {match.date.toLocaleDateString()}</h2>
+
+            <h1>Home Team Stats</h1>
+            <p>Ball Possession: {match.home_team_stats?.ball_possession}</p>
+            <p>Expected Goals: {match.home_team_stats?.expected_goals}</p>
+            <p>Total Shots: {match.home_team_stats?.total_shots}</p>
+            <p>Shots on Target: {match.home_team_stats?.shots_on_target}</p>
+            <p>Passes: {match.home_team_stats?.passes}</p>
+            <p>Corners: {match.home_team_stats?.corners}</p>
+            <p>Fouls: {match.home_team_stats?.fouls}</p>
+            <p>Tackles: {match.home_team_stats?.tackles}</p>
+            <p>Interceptions: {match.home_team_stats?.interceptions}</p>
+            <p>Saves: {match.home_team_stats?.saves}</p>
+            <p>Yellow Cards: {match.home_team_stats?.yellow_cards}</p>
+            <p>Red Cards: {match.home_team_stats?.red_cards}</p>
+
+            <h1>Away Team Stats</h1>
+            <p>Ball Possession: {match.away_team_stats?.ball_possession}</p>
+            <p>Expected Goals: {match.away_team_stats?.expected_goals}</p>
+            <p>Total Shots: {match.away_team_stats?.total_shots}</p>
+            <p>Shots on Target: {match.away_team_stats?.shots_on_target}</p>
+            <p>Passes: {match.away_team_stats?.passes}</p>
+            <p>Corners: {match.away_team_stats?.corners}</p>
+            <p>Fouls: {match.away_team_stats?.fouls}</p>
+            <p>Tackles: {match.away_team_stats?.tackles}</p>
+            <p>Interceptions: {match.away_team_stats?.interceptions}</p>
+            <p>Saves: {match.away_team_stats?.saves}</p>
+            <p>Yellow Cards: {match.away_team_stats?.yellow_cards}</p>
+            <p>Red Cards: {match.away_team_stats?.red_cards}</p>
+
+            <h1>Player Stats</h1>
+            {match.player_stats.map((player) => (
+                <div key={player.player_name}>
+                    <h2>{player.player_name}</h2>
+                    <p>Position: {player.position}</p>
+                    <p>Rating: {player.rating}</p>
+                    <p>Goals: {player.goals}</p>
+                    <p>Assists: {player.assists}</p>
+                    <p>Shots: {player.total_shots}</p>
+                    <p>Shots on Target: {player.shots_on_target}</p>
+                    <p>Passes: {player.passes}</p>
+                    <p>Tackles: {player.tackles}</p>
+                    <p>Interceptions: {player.interceptions}</p>
+                    <p>Duels Won: {player.duels_won}</p>
+                    <p>Saves: {player.saves}</p>
+                </div>
+            )}
+
+        </>
+    )
+
+}
+
+================================================================================
+FILE: frontend/src/components/match/MatchCard.tsx
+================================================================================
+
+import type { MatchCard } from "../../types/matches";
+import { useNavigate } from "react-router-dom";
+
+interface MatchCardProps {
+    match: MatchCard;
+}
+
+export default function MatchCard({ match }: MatchCardProps) {
+    const navigate = useNavigate();
+
+    return (
+        <div onClick={() => navigate(`/matches/${match.id}`)}>
+            <h3>{match.home} vs {match.away}</h3>
+            <h3>{match.score}</h3>
+            <h3>{match.date.toLocaleDateString()}</h3>
+            <h3>{match.stage}</h3>
+        </div>
+    )
+};

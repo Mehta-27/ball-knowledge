@@ -5,7 +5,8 @@ export default function Navbar() {
         <nav>
             <Link to="/">Home</Link>{" | "}
             <Link to="/players">Players</Link>{" | "}
-            <Link to="/teams">Teams</Link>
+            <Link to="/teams">Teams</Link>{" | "}
+            <Link to="/matches">Matches</Link>
         </nav>
     );
 }
