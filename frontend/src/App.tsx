@@ -9,6 +9,8 @@ import Teams from "./pages/Teams/Teams";
 import TeamDetailPage from "./pages/TeamDetail/TeamDetail";
 import Matches from "./pages/Matches/Matches";
 import MatchDetail from "./pages/MatchDetail/MatchDetail";
+import Standings from "./pages/Standings/Standings";
+import StandingDetail from "./pages/StandingDetail/StandingDetail";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path="/teams/:id" element={<TeamDetailPage />} />
           <Route path="/matches" element={<Matches />} />
           <Route path="/matches/:id" element={<MatchDetail />} />
+          <Route path="/standings" element={<Standings />} />
+          <Route path="/standings/:groupName" element={<StandingDetail />} />
         </Route>
       </Routes>
     </BrowserRouter>
