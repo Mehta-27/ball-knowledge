@@ -1,0 +1,28 @@
+import axios from "axios";
+import type { GroupCard, GroupDetail } from "../types/groups";
+import type { Standing } from "../types/standings";
+import type { MatchCard } from "../types/matches";
+
+const API = axios.create({
+    baseURL: "http://127.0.0.1:8000",
+});
+
+export async function getGroups(): Promise<GroupCard[]> {
+    const response = await API.get("/groups");
+    return response.data;
+}
+
+export async function getGroup(id: string): Promise<GroupDetail> {
+    const response = await API.get(`/groups/${id}`);
+    return response.data;
+}
+
+export async function getGroupStandings(groupId: string): Promise<Standing[]> {
+    const response = await API.get(`/groups/${groupId}/standings`);
+    return response.data;
+}
+
+export async function getGroupMatches(groupId: string): Promise<MatchCard[]> {
+    const response = await API.get(`/groups/${groupId}/matches`);
+    return response.data;
+}

@@ -8,7 +8,8 @@ export default function Navbar() {
             <Link to="/teams">Teams</Link>{" | "}
             <Link to="/matches">Matches</Link>{" | "}
             <Link to="/standings">Standings</Link>{" | "}
-            <Link to="/venues">Venues</Link>
+            <Link to="/venues">Venues</Link>{" | "}
+            <Link to="/groups">Groups</Link>
         </nav>
     );
 }

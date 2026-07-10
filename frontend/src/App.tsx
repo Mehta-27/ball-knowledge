@@ -13,6 +13,8 @@ import Standings from "./pages/Standings/Standings";
 import StandingDetail from "./pages/StandingDetail/StandingDetail";
 import Venues from "./pages/Venues/Venues";
 import VenueDetailPage from "./pages/VenueDetail/VenueDetail";
+import Groups from "./pages/Groups/Groups";
+import GroupDetailPage from "./pages/GroupDetail/GroupDetail";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/standings/:groupName" element={<StandingDetail />} />
           <Route path="/venues" element={<Venues />} />
           <Route path="/venues/:id" element={<VenueDetailPage />} />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/groups/:id" element={<GroupDetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
