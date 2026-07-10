@@ -14,12 +14,3 @@ export async function getMatch(id: string): Promise<MatchDetail> {
     const response = await API.get(`/matches/${id}`);
     return response.data;
 }
-
-export async function searchMatches(query: string): Promise<MatchCard[]> {
-    const response = await API.get("/matches/search", {
-        params: {
-            q: query,
-        },
-    });
-    return response.data;
-}
