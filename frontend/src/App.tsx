@@ -15,6 +15,8 @@ import Venues from "./pages/Venues/Venues";
 import VenueDetailPage from "./pages/VenueDetail/VenueDetail";
 import Groups from "./pages/Groups/Groups";
 import GroupDetailPage from "./pages/GroupDetail/GroupDetail";
+import Stages from "./pages/Stages/Stages";
+import StageDetailPage from "./pages/StageDetail/StageDetail";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
           <Route path="/venues/:id" element={<VenueDetailPage />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/groups/:id" element={<GroupDetailPage />} />
+          <Route path="/stages" element={<Stages />} />
+          <Route path="/stages/:id" element={<StageDetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
