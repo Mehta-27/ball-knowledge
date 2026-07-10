@@ -11,6 +11,8 @@ import Matches from "./pages/Matches/Matches";
 import MatchDetail from "./pages/MatchDetail/MatchDetail";
 import Standings from "./pages/Standings/Standings";
 import StandingDetail from "./pages/StandingDetail/StandingDetail";
+import Venues from "./pages/Venues/Venues";
+import VenueDetailPage from "./pages/VenueDetail/VenueDetail";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
           <Route path="/matches/:id" element={<MatchDetail />} />
           <Route path="/standings" element={<Standings />} />
           <Route path="/standings/:groupName" element={<StandingDetail />} />
+          <Route path="/venues" element={<Venues />} />
+          <Route path="/venues/:id" element={<VenueDetailPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
