@@ -14,6 +14,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
+        "https://ball-knowledge-nine.vercel.app",
+        "https://ball-knowledge-mehtarishit108-9506s-projects.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
