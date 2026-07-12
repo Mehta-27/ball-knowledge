@@ -112,12 +112,12 @@ function Formation() {
 function FootballSVG({ size }: { size: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" fill="none">
-      <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-      <path d="M20 6 L14 12 L16 19 L24 19 L26 12 Z" stroke="currentColor" strokeWidth="0.7" opacity="0.4" />
-      <path d="M14 12 L8 16 L10 22 L16 19 Z" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <path d="M26 12 L32 16 L30 22 L24 19 Z" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <path d="M16 19 L10 22 L12 28 L20 30 L24 19 Z" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
-      <path d="M20 30 L28 28 L30 22 L24 19 Z" stroke="currentColor" strokeWidth="0.5" opacity="0.3" />
+      <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1" opacity="0.9" />
+      <path d="M20 6 L14 12 L16 19 L24 19 L26 12 Z" stroke="currentColor" strokeWidth="0.7" opacity="0.75" />
+      <path d="M14 12 L8 16 L10 22 L16 19 Z" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
+      <path d="M26 12 L32 16 L30 22 L24 19 Z" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
+      <path d="M16 19 L10 22 L12 28 L20 30 L24 19 Z" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
+      <path d="M20 30 L28 28 L30 22 L24 19 Z" stroke="currentColor" strokeWidth="0.5" opacity="0.6" />
     </svg>
   );
 }
@@ -127,10 +127,10 @@ function BootSVG({ size }: { size: number }) {
   return (
     <svg width={size} height={size * 0.6} viewBox="0 0 50 30" fill="none">
       <path d="M5 8 Q8 4 14 4 L22 4 Q24 4 25 6 L28 14 Q29 16 30 16 L44 16 Q48 16 48 20 L48 24 Q48 26 46 26 L6 26 Q4 26 4 22 L4 14 Q4 10 5 8Z"
-        stroke="currentColor" strokeWidth="0.8" opacity="0.35" />
-      <line x1="8" y1="26" x2="8" y2="29" stroke="currentColor" strokeWidth="0.6" opacity="0.25" />
-      <line x1="14" y1="26" x2="14" y2="29" stroke="currentColor" strokeWidth="0.6" opacity="0.25" />
-      <line x1="20" y1="26" x2="20" y2="29" stroke="currentColor" strokeWidth="0.6" opacity="0.25" />
+        stroke="currentColor" strokeWidth="0.8" opacity="0.7" />
+      <line x1="8" y1="26" x2="8" y2="29" stroke="currentColor" strokeWidth="0.6" opacity="0.5" />
+      <line x1="14" y1="26" x2="14" y2="29" stroke="currentColor" strokeWidth="0.6" opacity="0.5" />
+      <line x1="20" y1="26" x2="20" y2="29" stroke="currentColor" strokeWidth="0.6" opacity="0.5" />
     </svg>
   );
 }
@@ -140,9 +140,9 @@ function WhistleSVG({ size }: { size: number }) {
   return (
     <svg width={size} height={size * 0.5} viewBox="0 0 50 25" fill="none">
       <path d="M6 12 Q6 6 12 6 L34 6 Q38 6 40 8 L46 12 Q48 14 46 16 L40 20 Q38 22 34 22 L12 22 Q6 22 6 16 Z"
-        stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
-      <circle cx="10" cy="14" r="4" stroke="currentColor" strokeWidth="0.7" opacity="0.25" />
-      <line x1="40" y1="10" x2="40" y2="18" stroke="currentColor" strokeWidth="0.5" opacity="0.2" />
+        stroke="currentColor" strokeWidth="0.8" opacity="0.65" />
+      <circle cx="10" cy="14" r="4" stroke="currentColor" strokeWidth="0.7" opacity="0.55" />
+      <line x1="40" y1="10" x2="40" y2="18" stroke="currentColor" strokeWidth="0.5" opacity="0.45" />
     </svg>
   );
 }
@@ -151,8 +151,8 @@ function WhistleSVG({ size }: { size: number }) {
 function CardSVG({ size }: { size: number }) {
   return (
     <svg width={size} height={size * 1.2} viewBox="0 0 30 36" fill="none">
-      <rect x="3" y="2" width="24" height="32" rx="2" stroke="currentColor" strokeWidth="0.8" opacity="0.3" />
-      <line x1="3" y1="18" x2="27" y2="18" stroke="currentColor" strokeWidth="0.4" opacity="0.15" />
+      <rect x="3" y="2" width="24" height="32" rx="2" stroke="currentColor" strokeWidth="0.8" opacity="0.65" />
+      <line x1="3" y1="18" x2="27" y2="18" stroke="currentColor" strokeWidth="0.4" opacity="0.4" />
     </svg>
   );
 }
@@ -161,8 +161,8 @@ function CardSVG({ size }: { size: number }) {
 function CornerFlagSVG({ size }: { size: number }) {
   return (
     <svg width={size} height={size * 1.4} viewBox="0 0 24 34" fill="none">
-      <line x1="4" y1="2" x2="4" y2="32" stroke="currentColor" strokeWidth="0.7" opacity="0.25" />
-      <path d="M4 2 L20 8 L4 14 Z" stroke="currentColor" strokeWidth="0.6" fill="currentColor" opacity="0.08" />
+      <line x1="4" y1="2" x2="4" y2="32" stroke="currentColor" strokeWidth="0.7" opacity="0.55" />
+      <path d="M4 2 L20 8 L4 14 Z" stroke="currentColor" strokeWidth="0.6" fill="currentColor" opacity="0.2" />
     </svg>
   );
 }
@@ -177,25 +177,24 @@ interface FloatObj {
   opacity: number;
   duration: number;
   delay: number;
-  drift: number;
 }
 
 const floatObjects: FloatObj[] = [
-  // Near layer — sharp, small, slow
-  { component: FootballSVG, x: "12%", y: "25%", size: 28, blur: 0, opacity: 0.12, duration: 22, delay: 0, drift: 15 },
-  { component: BootSVG, x: "85%", y: "35%", size: 36, blur: 0, opacity: 0.08, duration: 26, delay: -6, drift: -12 },
-  { component: CardSVG, x: "78%", y: "70%", size: 22, blur: 0, opacity: 0.07, duration: 24, delay: -10, drift: 10 },
-  { component: CornerFlagSVG, x: "8%", y: "65%", size: 18, blur: 0, opacity: 0.06, duration: 28, delay: -14, drift: -8 },
+  // Near layer — sharp, visible
+  { component: FootballSVG, x: "12%", y: "25%", size: 28, blur: 0, opacity: 0.22, duration: 22, delay: 0 },
+  { component: BootSVG, x: "85%", y: "35%", size: 36, blur: 0, opacity: 0.18, duration: 26, delay: -6 },
+  { component: CardSVG, x: "78%", y: "70%", size: 22, blur: 0, opacity: 0.15, duration: 24, delay: -10 },
+  { component: CornerFlagSVG, x: "8%", y: "65%", size: 18, blur: 0, opacity: 0.13, duration: 28, delay: -14 },
 
-  // Mid layer — slightly blurred, medium
-  { component: FootballSVG, x: "70%", y: "18%", size: 40, blur: 1.5, opacity: 0.06, duration: 30, delay: -4, drift: -18 },
-  { component: WhistleSVG, x: "22%", y: "75%", size: 44, blur: 1, opacity: 0.05, duration: 28, delay: -12, drift: 14 },
-  { component: BootSVG, x: "55%", y: "80%", size: 32, blur: 1.5, opacity: 0.04, duration: 26, delay: -8, drift: -10 },
+  // Mid layer — slightly blurred, softer
+  { component: FootballSVG, x: "70%", y: "18%", size: 40, blur: 1.5, opacity: 0.12, duration: 30, delay: -4 },
+  { component: WhistleSVG, x: "22%", y: "75%", size: 44, blur: 1, opacity: 0.10, duration: 28, delay: -12 },
+  { component: BootSVG, x: "55%", y: "80%", size: 32, blur: 1.5, opacity: 0.09, duration: 26, delay: -8 },
 
-  // Far layer — very blurred, large, ghostly
-  { component: FootballSVG, x: "40%", y: "15%", size: 60, blur: 4, opacity: 0.03, duration: 35, delay: -2, drift: 20 },
-  { component: CornerFlagSVG, x: "90%", y: "55%", size: 30, blur: 3, opacity: 0.025, duration: 32, delay: -16, drift: -15 },
-  { component: CardSVG, x: "15%", y: "45%", size: 34, blur: 3.5, opacity: 0.02, duration: 30, delay: -20, drift: 12 },
+  // Far layer — blurred, ghostly but visible
+  { component: FootballSVG, x: "40%", y: "15%", size: 60, blur: 4, opacity: 0.07, duration: 35, delay: -2 },
+  { component: CornerFlagSVG, x: "90%", y: "55%", size: 30, blur: 3, opacity: 0.06, duration: 32, delay: -16 },
+  { component: CardSVG, x: "15%", y: "45%", size: 34, blur: 3.5, opacity: 0.05, duration: 30, delay: -20 },
 ];
 
 function FloatingObjects() {
@@ -211,7 +210,6 @@ function FloatingObjects() {
               left: obj.x,
               top: obj.y,
               opacity: obj.opacity,
-              '--drift': `${obj.drift}px`,
               '--duration': `${obj.duration}s`,
               '--delay': `${obj.delay}s`,
               '--blur': `${obj.blur}px`,

@@ -1326,28 +1326,28 @@ h1, h2, h3, h4, h5, h6 {
 /* Directional motion blur — peaks at movement extremes, clears at direction changes */
 @keyframes objDrift {
   0% {
-    transform: translate(0, 0) rotate(0deg);
-    filter: blur(var(--blur, 0px)) blurX(calc(var(--blur, 0px) + 2px));
+    transform: translate(0, 0);
+    filter: blur(0px);
   }
   15% {
-    transform: translate(calc(var(--drift, 15px) * 0.6), calc(var(--drift, 15px) * -0.3));
-    filter: blur(calc(var(--blur, 0px) + 2px)) blurX(calc(var(--blur, 0px) + 4px));
+    transform: translate(10px, -5px);
+    filter: blur(2.5px);
   }
   35% {
-    transform: translate(calc(var(--drift, 15px) * -0.3), calc(var(--drift, 15px) * 0.7));
-    filter: blur(calc(var(--blur, 0px) + 1px));
+    transform: translate(-5px, 12px);
+    filter: blur(1px);
   }
   55% {
-    transform: translate(calc(var(--drift, 15px) * -0.8), calc(var(--drift, 15px) * -0.2));
-    filter: blur(calc(var(--blur, 0px) + 2.5px)) blurX(calc(var(--blur, 0px) + 5px));
+    transform: translate(-14px, -4px);
+    filter: blur(3px);
   }
   75% {
-    transform: translate(calc(var(--drift, 15px) * 0.4), calc(var(--drift, 15px) * 0.5));
-    filter: blur(calc(var(--blur, 0px) + 1px));
+    transform: translate(7px, 8px);
+    filter: blur(1px);
   }
   100% {
-    transform: translate(calc(var(--drift, 15px) * -0.5), calc(var(--drift, 15px) * -0.6));
-    filter: blur(var(--blur, 0px)) blurX(calc(var(--blur, 0px) + 3px));
+    transform: translate(-8px, -10px);
+    filter: blur(0px);
   }
 }
 
