@@ -19,8 +19,12 @@ export default function PlayerDetailPage() {
             const data = await getPlayer(id);
             setPlayer(data);
 
-            const similar = await getSimilarPlayers(id);
-            setSimilarPlayers(similar);
+            try {
+                const similar = await getSimilarPlayers(id);
+                setSimilarPlayers(similar);
+            } catch {
+                setSimilarPlayers([]);
+            }
         }
 
         fetchPlayer();
@@ -73,7 +77,7 @@ export default function PlayerDetailPage() {
                 </div>
             </div>
 
-            {similarPlayers.length > 0 && (
+            {similarPlayers.length > 0 ? (
                 <div className="section">
                     <h2 className="type-h2 mb-6">Similar Players</h2>
                     <div className="flex--col gap-3">
@@ -84,6 +88,11 @@ export default function PlayerDetailPage() {
                             />
                         ))}
                     </div>
+                </div>
+            ) : (
+                <div className="section">
+                    <h2 className="type-h2 mb-6">Similar Players</h2>
+                    <p className="text-muted">Similarity data not available for this player.</p>
                 </div>
             )}
         </div>
