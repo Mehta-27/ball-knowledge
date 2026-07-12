@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getPlayer } from "../../api/players";
-import type { PlayerDetail } from "../../types/players";
-import { getSimilarPlayers } from "../../api/players";
+import { getPlayer, getSimilarPlayers } from "../../api/players";
 import SimilarPlayerRow from "../../components/player/SimilarPlayerRow";
+
+import type { PlayerDetail } from "../../types/players";
 import type { SimilarPlayer } from "../../types/players";
 
 export default function PlayerDetailPage() {
     const { id } = useParams();
 
-    const [player, setPlayer] =
-        useState<PlayerDetail | null>(null);
-
+    const [player, setPlayer] = useState<PlayerDetail | null>(null);
     const [similarPlayers, setSimilarPlayers] = useState<SimilarPlayer[]>([]);
 
     useEffect(() => {
         async function fetchPlayer() {
-
             if (!id) return;
 
             const data = await getPlayer(id);
@@ -24,8 +21,6 @@ export default function PlayerDetailPage() {
 
             const similar = await getSimilarPlayers(id);
             setSimilarPlayers(similar);
-
-
         }
 
         fetchPlayer();
@@ -42,39 +37,39 @@ export default function PlayerDetailPage() {
 
     return (
         <div className="section">
-            <div className="flex gap-6 mb-8">
+            <div className="player-detail__hero">
                 {player.picture_url && (
                     <img
                         src={player.picture_url}
                         alt={player.name}
-                        className="avatar avatar--xl"
+                        className="player-detail__portrait"
                     />
                 )}
-                <div className="flex--col gap-2">
-                    <h1 className="type-h1">{player.name}</h1>
-                    <div className="flex gap-2 mt-2">
+                <div>
+                    <h1 className="player-detail__name">{player.name}</h1>
+                    <div className="player-detail__badges">
                         <span className="badge badge--primary badge--lg">{player.position}</span>
                         <span className="badge badge--neutral">#{player.jersey_number}</span>
                     </div>
                 </div>
             </div>
 
-            <div className="grid grid--4 mb-8">
-                <div className="stat">
-                    <span className="stat__value">{player.country}</span>
-                    <span className="stat__label">Country</span>
+            <div className="player-detail__stats-grid">
+                <div className="player-detail__stat">
+                    <span className="player-detail__stat-value">{player.country}</span>
+                    <span className="player-detail__stat-label">Country</span>
                 </div>
-                <div className="stat">
-                    <span className="stat__value">{player.team}</span>
-                    <span className="stat__label">Team</span>
+                <div className="player-detail__stat">
+                    <span className="player-detail__stat-value">{player.team}</span>
+                    <span className="player-detail__stat-label">Team</span>
                 </div>
-                <div className="stat">
-                    <span className="stat__value">{player.position}</span>
-                    <span className="stat__label">Position</span>
+                <div className="player-detail__stat">
+                    <span className="player-detail__stat-value">{player.position}</span>
+                    <span className="player-detail__stat-label">Position</span>
                 </div>
-                <div className="stat">
-                    <span className="stat__value">{player.age}</span>
-                    <span className="stat__label">Age</span>
+                <div className="player-detail__stat">
+                    <span className="player-detail__stat-value">{player.age}</span>
+                    <span className="player-detail__stat-label">Age</span>
                 </div>
             </div>
 

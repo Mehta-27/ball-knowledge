@@ -1,10 +1,24 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-import { getPlayers } from "../../api/players";
-import { searchPlayers } from "../../api/players";
+import { getPlayers, searchPlayers } from "../../api/players";
 import PlayerCard from "../../components/player/PlayerCard";
 
 import type { PlayerCard as PlayerCardType } from "../../types/players";
+
+const container = {
+    hidden: {},
+    show: {
+        transition: {
+            staggerChildren: 0.04,
+        },
+    },
+};
+
+const item = {
+    hidden: { opacity: 0, y: 16 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export default function Players() {
     const [players, setPlayers] = useState<PlayerCardType[]>([]);
@@ -26,17 +40,25 @@ export default function Players() {
 
     return (
         <div className="section">
-            <div className="section-header">
-                <h1 className="type-h1">Players</h1>
+            <div className="players-header">
+                <div className="players-header__top">
+                    <h1 className="players-header__title">Players</h1>
+                    <span className="players-header__count">
+                        {players.length} {players.length === 1 ? "player" : "players"}
+                    </span>
+                </div>
+                <p className="players-header__subtitle">
+                    Search and explore player profiles, stats, and similarity networks.
+                </p>
             </div>
 
-            <div className="search-bar mb-6">
-                <svg className="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <div className="players-search">
+                <svg className="players-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="8" />
                     <path d="m21 21-4.35-4.35" />
                 </svg>
                 <input
-                    className="input"
+                    className="players-search__input"
                     type="text"
                     placeholder="Search players by name..."
                     value={query}
@@ -44,25 +66,30 @@ export default function Players() {
                 />
             </div>
 
-            <div className="grid grid--auto-fill">
-                {players.map((player) => (
-                    <PlayerCard
-                        key={player.id}
-                        player={player}
-                    />
-                ))}
-            </div>
-
-            {players.length === 0 && (
-                <div className="state">
-                    <div className="state__icon state__icon--empty">
+            {players.length > 0 ? (
+                <motion.div
+                    className="grid grid--auto-fill"
+                    variants={container}
+                    initial="hidden"
+                    animate="show"
+                    key={query || "all"}
+                >
+                    {players.map((player) => (
+                        <motion.div key={player.id} variants={item}>
+                            <PlayerCard player={player} />
+                        </motion.div>
+                    ))}
+                </motion.div>
+            ) : (
+                <div className="players-empty">
+                    <div className="players-empty__icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="11" cy="11" r="8" />
                             <path d="m21 21-4.35-4.35" />
                         </svg>
                     </div>
-                    <p className="state__title">No players found</p>
-                    <p className="state__description">Try adjusting your search query.</p>
+                    <p className="players-empty__title">No players found</p>
+                    <p className="players-empty__text">Try adjusting your search query.</p>
                 </div>
             )}
         </div>

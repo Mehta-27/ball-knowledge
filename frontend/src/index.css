@@ -2227,6 +2227,363 @@ h1, h2, h3, h4, h5, h6 {
 
 
 /* -------------------------------------------
+   21. PLAYERS PAGE — SCOUTING DATABASE
+   ------------------------------------------- */
+
+.players-header {
+  margin-bottom: var(--space-10);
+}
+
+.players-header__top {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.players-header__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+}
+
+.players-header__count {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.players-header__subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 480px;
+}
+
+/* Enhanced search */
+.players-search {
+  position: relative;
+  max-width: 560px;
+  width: 100%;
+  margin-bottom: var(--space-10);
+}
+
+.players-search__icon {
+  position: absolute;
+  left: var(--space-5);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-ghost);
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  transition: color var(--duration-normal) var(--ease-out);
+}
+
+.players-search__input {
+  width: 100%;
+  padding: var(--space-4) var(--space-5) var(--space-4) var(--space-12);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.players-search__input::placeholder {
+  color: var(--text-ghost);
+}
+
+.players-search__input:hover {
+  border-color: var(--border-hover);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.players-search__input:focus {
+  border-color: var(--primary-dim);
+  box-shadow: 0 0 0 1px var(--primary-dim), 0 0 30px rgba(0, 214, 143, 0.06);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.players-search__input:focus ~ .players-search__icon {
+  color: var(--primary);
+}
+
+/* Player Card — Vertical Scouting Card */
+.player-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition:
+    transform var(--duration-normal) var(--ease-out),
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-slow) var(--ease-out);
+}
+
+.player-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06) 30%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.06) 70%,
+    transparent
+  );
+  z-index: 2;
+}
+
+.player-card::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: var(--primary);
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.player-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow:
+    var(--shadow-rim),
+    var(--shadow-lg),
+    0 0 60px rgba(0, 214, 143, 0.06);
+}
+
+.player-card:hover::after {
+  opacity: 0.6;
+}
+
+.player-card:active {
+  transform: translateY(-2px);
+  transition-duration: var(--duration-fast);
+}
+
+/* Image — face crop */
+.player-card__image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.player-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.player-card:hover .player-card__image {
+  transform: scale(1.03);
+}
+
+/* Jersey number overlay */
+.player-card__number {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-3);
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.1);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Gradient fade from image to info */
+.player-card__image-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, var(--bg-card), transparent);
+  pointer-events: none;
+}
+
+/* Info section */
+.player-card__info {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.player-card__name {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.player-card__position {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.player-card__dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--text-ghost);
+  flex-shrink: 0;
+}
+
+.player-card__jersey {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Empty state */
+.players-empty {
+  text-align: center;
+  padding: var(--space-20) var(--space-6);
+}
+
+.players-empty__icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-6);
+  border-radius: var(--radius-full);
+  background: rgba(0, 214, 143, 0.05);
+  border: 1px solid rgba(0, 214, 143, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-dim);
+}
+
+.players-empty__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.players-empty__text {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* Player Detail — Premium Profile */
+.player-detail__hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  margin-bottom: var(--space-10);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--border);
+}
+
+.player-detail__portrait {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  object-position: top center;
+  border: 2px solid var(--border);
+  box-shadow: 0 0 40px rgba(0, 214, 143, 0.08);
+  flex-shrink: 0;
+}
+
+.player-detail__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-2);
+}
+
+.player-detail__badges {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.player-detail__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+  margin-bottom: var(--space-10);
+}
+
+.player-detail__stat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  position: relative;
+  overflow: hidden;
+}
+
+.player-detail__stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06) 30%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.06) 70%,
+    transparent
+  );
+}
+
+.player-detail__stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.player-detail__stat-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+
+/* -------------------------------------------
    HOMEPAGE RESPONSIVE
    ------------------------------------------- */
 @media (max-width: 1024px) {
@@ -2312,5 +2669,42 @@ h1, h2, h3, h4, h5, h6 {
   .featured-card__header {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+
+/* -------------------------------------------
+   PLAYERS PAGE RESPONSIVE
+   ------------------------------------------- */
+@media (max-width: 768px) {
+  .player-detail__hero {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-4);
+  }
+
+  .player-detail__portrait {
+    width: 96px;
+    height: 96px;
+  }
+
+  .player-detail__badges {
+    justify-content: center;
+  }
+
+  .player-detail__stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .players-header__top {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+}
+
+@media (max-width: 480px) {
+  .player-detail__stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
   }
 }

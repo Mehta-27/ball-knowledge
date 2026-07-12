@@ -1,8 +1,8 @@
-import type { PlayerCard } from "../../types/players";
+import type { PlayerCard as PlayerCardType } from "../../types/players";
 import { useNavigate } from "react-router-dom";
 
 interface PlayerCardProps {
-    player: PlayerCard;
+    player: PlayerCardType;
 }
 
 export default function PlayerCard({ player }: PlayerCardProps) {
@@ -10,26 +10,28 @@ export default function PlayerCard({ player }: PlayerCardProps) {
 
     return (
         <div
-            className="card card--clickable"
+            className="player-card"
             onClick={() => navigate(`/players/${player.id}`)}
         >
-            <div className="flex gap-4">
-                {player.picture_url && (
+            {player.picture_url && (
+                <div className="player-card__image-wrap">
                     <img
                         src={player.picture_url}
                         alt={player.name}
-                        className="avatar avatar--lg"
+                        className="player-card__image"
+                        loading="lazy"
                     />
-                )}
-                <div className="flex--col gap-2" style={{ flex: 1 }}>
-                    <div>
-                        <h3 className="card__title">{player.name}</h3>
-                        <p className="type-caption">{player.position}</p>
-                    </div>
-                    <div className="flex gap-2 mt-2">
-                        <span className="badge badge--primary">#{player.jersey_number}</span>
-                        <span className="badge badge--neutral">{player.position}</span>
-                    </div>
+                    <span className="player-card__number">
+                        {player.jersey_number}
+                    </span>
+                </div>
+            )}
+            <div className="player-card__info">
+                <h3 className="player-card__name">{player.name}</h3>
+                <div className="player-card__meta">
+                    <span className="player-card__position">{player.position}</span>
+                    <span className="player-card__dot" />
+                    <span className="player-card__jersey">#{player.jersey_number}</span>
                 </div>
             </div>
         </div>
