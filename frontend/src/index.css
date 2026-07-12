@@ -1304,6 +1304,59 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateY(-120px) translateX(30px); opacity: 0; }
 }
 
+/* Floating football objects — depth-of-field + motion blur */
+.hero-floating {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-floating__obj {
+  position: absolute;
+  color: var(--primary);
+  will-change: transform, filter;
+  animation:
+    objDrift var(--duration, 24s) var(--delay, 0s) ease-in-out infinite alternate,
+    objSpin var(--duration, 24s) var(--delay, 0s) linear infinite;
+  transform-origin: center center;
+}
+
+/* Directional motion blur — peaks at movement extremes, clears at direction changes */
+@keyframes objDrift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    filter: blur(var(--blur, 0px)) blurX(calc(var(--blur, 0px) + 2px));
+  }
+  15% {
+    transform: translate(calc(var(--drift, 15px) * 0.6), calc(var(--drift, 15px) * -0.3));
+    filter: blur(calc(var(--blur, 0px) + 2px)) blurX(calc(var(--blur, 0px) + 4px));
+  }
+  35% {
+    transform: translate(calc(var(--drift, 15px) * -0.3), calc(var(--drift, 15px) * 0.7));
+    filter: blur(calc(var(--blur, 0px) + 1px));
+  }
+  55% {
+    transform: translate(calc(var(--drift, 15px) * -0.8), calc(var(--drift, 15px) * -0.2));
+    filter: blur(calc(var(--blur, 0px) + 2.5px)) blurX(calc(var(--blur, 0px) + 5px));
+  }
+  75% {
+    transform: translate(calc(var(--drift, 15px) * 0.4), calc(var(--drift, 15px) * 0.5));
+    filter: blur(calc(var(--blur, 0px) + 1px));
+  }
+  100% {
+    transform: translate(calc(var(--drift, 15px) * -0.5), calc(var(--drift, 15px) * -0.6));
+    filter: blur(var(--blur, 0px)) blurX(calc(var(--blur, 0px) + 3px));
+  }
+}
+
+/* Slow rotation — direction reversal creates motion blur illusion */
+@keyframes objSpin {
+  0%   { rotate: 0deg; }
+  100% { rotate: 360deg; }
+}
+
 /* Hero content */
 .home-hero__content {
   position: relative;

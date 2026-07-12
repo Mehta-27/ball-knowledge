@@ -210,11 +210,11 @@ function FloatingObjects() {
             style={{
               left: obj.x,
               top: obj.y,
-              filter: obj.blur > 0 ? `blur(${obj.blur}px)` : undefined,
               opacity: obj.opacity,
-              animationDuration: `${obj.duration}s`,
-              animationDelay: `${obj.delay}s`,
               '--drift': `${obj.drift}px`,
+              '--duration': `${obj.duration}s`,
+              '--delay': `${obj.delay}s`,
+              '--blur': `${obj.blur}px`,
             } as React.CSSProperties}
           >
             <Comp size={obj.size} />
