@@ -10,30 +10,30 @@ export default function MatchCard({ match }: MatchCardProps) {
 
     return (
         <div
-            className="card card--clickable"
+            className="match-card"
             onClick={() => navigate(`/matches/${match.id}`)}
         >
-            <div className="card__header">
-                <div>
-                    <h3 className="card__title">
-                        {match.home} <span style={{ color: "var(--text-muted)" }}>vs</span> {match.away}
-                    </h3>
-                    {match.stage && (
-                        <p className="card__subtitle">{match.stage}</p>
-                    )}
+            <div className="match-card__inner">
+                <div className="match-card__teams">
+                    <span className="match-card__team">{match.home}</span>
+                    <span className="match-card__vs">vs</span>
+                    <span className="match-card__team">{match.away}</span>
                 </div>
                 {match.score && (
-                    <span className="badge badge--primary badge--lg">{match.score}</span>
+                    <span className="match-card__score">{match.score}</span>
                 )}
             </div>
-            <div className="card__footer">
-                <span className="type-caption">
+            <div className="match-card__meta">
+                <span className="match-card__date">
                     {new Date(match.date).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                     })}
                 </span>
+                {match.stage && (
+                    <span className="match-card__stage">{match.stage}</span>
+                )}
             </div>
         </div>
     );

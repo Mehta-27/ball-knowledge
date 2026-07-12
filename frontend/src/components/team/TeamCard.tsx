@@ -10,13 +10,11 @@ export default function TeamCard({ team }: TeamCardProps) {
 
     return (
         <div
-            className="card card--clickable"
+            className="team-card"
             onClick={() => navigate(`/teams/${team.id}`)}
         >
-            <h3 className="card__title">{team.name}</h3>
-            <div className="mt-2">
-                <span className="badge badge--neutral">{team.code}</span>
-            </div>
+            <h3 className="team-card__name">{team.name}</h3>
+            <span className="badge badge--neutral">{team.code}</span>
         </div>
     );
 }

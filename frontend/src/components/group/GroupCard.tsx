@@ -10,10 +10,11 @@ export default function GroupCard({ group }: GroupCardProps) {
 
     return (
         <div
-            className="card card--clickable"
+            className="entity-card"
             onClick={() => navigate(`/groups/${group.id}`)}
         >
-            <h3 className="card__title">{group.name}</h3>
+            <h3 className="entity-card__title">{group.name}</h3>
+            <span className="badge badge--primary">View details</span>
         </div>
     );
 }

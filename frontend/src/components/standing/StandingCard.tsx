@@ -10,11 +10,11 @@ export default function StandingCard({ group }: StandingCardProps) {
 
     return (
         <div
-            className="card card--clickable"
+            className="entity-card"
             onClick={() => navigate(`/standings/${encodeURIComponent(group.group)}`)}
         >
-            <h3 className="card__title">{group.group}</h3>
-            <p className="type-caption mt-2">{group.standings.length} teams</p>
+            <h3 className="entity-card__title">{group.group}</h3>
+            <span className="badge badge--neutral">{group.standings.length} teams</span>
         </div>
     );
 }

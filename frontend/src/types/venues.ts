@@ -5,6 +5,13 @@ export interface VenueCard {
     capacity: number | null;
 }
 
+export interface PaginatedVenues {
+    items: VenueCard[];
+    total: number;
+    limit: number;
+    offset: number;
+}
+
 export interface VenueDetail {
     id: number;
     stadium: string;

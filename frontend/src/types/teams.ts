@@ -4,6 +4,13 @@ export interface TeamCard {
     code: string;
 }
 
+export interface PaginatedTeams {
+    items: TeamCard[];
+    total: number;
+    limit: number;
+    offset: number;
+}
+
 export interface TeamDetail {
     id: number;
     name: string;

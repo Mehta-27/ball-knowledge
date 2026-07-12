@@ -1,9 +1,17 @@
 import axios from "axios";
-import type { MatchCard, MatchDetail } from "../types/matches";
+import type { MatchCard, MatchDetail, PaginatedMatches } from "../types/matches";
 
 const API = axios.create({
     baseURL: "http://127.0.0.1:8000",
 });
+
+export async function getPaginatedMatches(
+    limit = 24,
+    offset = 0,
+): Promise<PaginatedMatches> {
+    const response = await API.get("/matches", { params: { limit, offset } });
+    return response.data;
+}
 
 export async function getMatches(): Promise<MatchCard[]> {
     const response = await API.get("/matches");

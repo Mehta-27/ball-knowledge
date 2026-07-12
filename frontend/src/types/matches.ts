@@ -7,6 +7,13 @@ export interface MatchCard {
     stage: string | null;
 }
 
+export interface PaginatedMatches {
+    items: MatchCard[];
+    total: number;
+    limit: number;
+    offset: number;
+}
+
 export interface TeamStatResponse {
     team_id: number
     team_name: string;
