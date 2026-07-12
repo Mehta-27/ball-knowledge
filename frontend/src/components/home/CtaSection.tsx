@@ -31,6 +31,12 @@ export default function CtaSection() {
           <Link to="/standings" className="home-footer-close__link">
             Standings
           </Link>
+          <Link to="/venues" className="home-footer-close__link">
+            Venues
+          </Link>
+          <Link to="/groups" className="home-footer-close__link">
+            Groups
+          </Link>
         </div>
       </motion.div>
     </section>
