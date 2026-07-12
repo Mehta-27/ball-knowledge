@@ -735,38 +735,42 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   padding: 0 var(--space-6);
   transition:
-    background var(--duration-slow) var(--ease-out),
-    border-color var(--duration-slow) var(--ease-out),
-    box-shadow var(--duration-slow) var(--ease-out);
+    background var(--duration-slower) var(--ease-out),
+    border-color var(--duration-slower) var(--ease-out),
+    box-shadow var(--duration-slower) var(--ease-out),
+    backdrop-filter var(--duration-slower) var(--ease-out);
 }
 
-/* Scrolled state — applied via JS adding .navbar--scrolled */
+/* Scrolled state — glass panel with rim light */
 .navbar--scrolled {
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
-  border-bottom-color: var(--border);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(32px) saturate(160%);
+  -webkit-backdrop-filter: blur(32px) saturate(160%);
+  border-bottom-color: rgba(255, 255, 255, 0.04);
   box-shadow:
-    0 1px 0 rgba(0, 214, 143, 0.04),
-    0 4px 24px rgba(0, 0, 0, 0.4);
+    0 1px 0 rgba(0, 214, 143, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.02);
 }
 
-/* Bottom rim light on navbar */
+/* Bottom emerald rim light — fades in on scroll */
 .navbar::after {
   content: '';
   position: absolute;
   bottom: -1px;
-  left: 0;
-  right: 0;
+  left: 10%;
+  right: 10%;
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(0, 214, 143, 0.06) 50%,
+    rgba(0, 214, 143, 0.12) 30%,
+    rgba(0, 214, 143, 0.2) 50%,
+    rgba(0, 214, 143, 0.12) 70%,
     transparent
   );
   opacity: 0;
-  transition: opacity var(--duration-slow) var(--ease-out);
+  transition: opacity var(--duration-slower) var(--ease-out);
 }
 
 .navbar--scrolled::after {
@@ -782,15 +786,22 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
 }
 
+/* Brand — Basement Grotesque display font */
 .navbar__brand {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-  font-weight: 700;
-  font-size: 1rem;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.05rem;
   letter-spacing: -0.02em;
   color: var(--text-primary);
   flex-shrink: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.navbar__brand:hover {
+  opacity: 0.85;
 }
 
 .navbar__brand-icon {
@@ -802,24 +813,35 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   color: var(--bg-base);
-  box-shadow: 0 0 16px rgba(0, 214, 143, 0.15);
+  box-shadow:
+    0 0 16px rgba(0, 214, 143, 0.2),
+    0 0 4px rgba(0, 214, 143, 0.3);
+  transition: box-shadow var(--duration-normal) var(--ease-out);
 }
 
+.navbar__brand:hover .navbar__brand-icon {
+  box-shadow:
+    0 0 24px rgba(0, 214, 143, 0.3),
+    0 0 8px rgba(0, 214, 143, 0.4);
+}
+
+/* Navigation links */
 .navbar__links {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
+  gap: 2px;
 }
 
 .navbar__link {
-  padding: var(--space-2) var(--space-3);
+  padding: 6px 14px;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-muted);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-full);
   transition:
     color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out);
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
   white-space: nowrap;
   position: relative;
   letter-spacing: 0.01em;
@@ -827,40 +849,49 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar__link:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.06);
 }
 
+/* Active state — emerald glow pill */
 .navbar__link--active {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.06);
+  color: var(--primary);
+  background: rgba(0, 214, 143, 0.08);
+  box-shadow: 0 0 16px rgba(0, 214, 143, 0.06);
 }
 
 .navbar__link--active::after {
   content: '';
   position: absolute;
-  bottom: -1px;
-  left: var(--space-3);
-  right: var(--space-3);
-  height: 1px;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 2px;
   background: var(--primary);
   border-radius: var(--radius-full);
+  box-shadow: 0 0 8px rgba(0, 214, 143, 0.5);
 }
 
+/* Mobile hamburger toggle */
 .navbar__mobile-toggle {
   display: none;
   width: 40px;
   height: 40px;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  transition: background var(--duration-fast) var(--ease-out);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
 }
 
 .navbar__mobile-toggle:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
 }
 
+/* Hamburger → X morph */
 .navbar__hamburger {
   width: 18px;
   height: 14px;
@@ -876,8 +907,8 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   left: 0;
   transition:
-    transform var(--duration-normal) var(--ease-out),
-    opacity var(--duration-normal) var(--ease-out);
+    transform var(--duration-normal) var(--ease-spring),
+    opacity var(--duration-fast) var(--ease-out);
 }
 
 .navbar__hamburger span:nth-child(1) { top: 0; }
@@ -890,6 +921,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar__mobile-open .navbar__hamburger span:nth-child(2) {
   opacity: 0;
+  transform: scaleX(0);
 }
 
 .navbar__mobile-open .navbar__hamburger span:nth-child(3) {
@@ -918,25 +950,40 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border);
-    padding: var(--space-4) var(--space-6);
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding: var(--space-6) var(--space-6);
     gap: var(--space-1);
     overflow-y: auto;
     z-index: 999;
-    animation: fadeSlideDown var(--duration-normal) var(--ease-out);
   }
 
   .navbar__link {
     font-size: 1rem;
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-md);
+    font-weight: 500;
+    padding: var(--space-4) var(--space-5);
+    border-radius: var(--radius-lg);
+    opacity: 0;
+    transform: translateY(12px);
+    animation: mobileLinkIn var(--duration-slow) var(--ease-out) forwards;
+    animation-delay: var(--stagger, 0ms);
+  }
+
+  .navbar__link--active {
+    background: rgba(0, 214, 143, 0.06);
   }
 
   .navbar__link--active::after {
     display: none;
+  }
+}
+
+@keyframes mobileLinkIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

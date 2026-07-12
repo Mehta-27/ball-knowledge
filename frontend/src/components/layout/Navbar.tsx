@@ -52,12 +52,13 @@ export default function Navbar() {
         </Link>
 
         <div className={`navbar__links ${mobileOpen ? "navbar__links--mobile-open" : ""}`}>
-          {links.map(({ to, label }) => (
+          {links.map(({ to, label }, i) => (
             <Link
               key={to}
               to={to}
               className={`navbar__link ${isActive(to) ? "navbar__link--active" : ""}`}
               onClick={closeMobile}
+              style={{ '--stagger': `${i * 50}ms` } as React.CSSProperties}
             >
               {label}
             </Link>
