@@ -8,6 +8,17 @@
 /* -------------------------------------------
    1. CSS CUSTOM PROPERTIES (DESIGN TOKENS)
    ------------------------------------------- */
+
+/* @font-face — Basement Grotesque (hero display only) */
+@font-face {
+  font-family: 'Basement Grotesque';
+  src: url('/fonts/BasementGrotesque-Black.woff2') format('woff2'),
+       url('/fonts/BasementGrotesque-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Background — pitch black */
   --bg-base: #000000;
@@ -83,6 +94,7 @@
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Basement Grotesque', 'Inter', sans-serif;
   --font-mono: 'SF Mono', 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
 
   /* Transitions — smooth, expensive feel */
@@ -1379,9 +1391,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .home-hero__title {
+  font-family: var(--font-display);
   font-size: clamp(3.5rem, 9vw, 7.5rem);
-  font-weight: 800;
-  letter-spacing: -0.05em;
+  font-weight: 900;
+  letter-spacing: -0.03em;
   line-height: 0.92;
   background: linear-gradient(
     180deg,
