@@ -113,9 +113,9 @@ def main():
     match_service.sync_matches()
     standing_service.sync_standings()
     mapping_service.sync_mappings()
-    player_mapping_service.sync_mappings()
     stats_service.sync_stats()
     player_stats_service.sync_stats()
+    player_mapping_service.sync_mappings()
 
 
 if __name__ == "__main__":

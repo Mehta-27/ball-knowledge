@@ -14,13 +14,18 @@ from mappers.player_response_mapper import player_orm_to_card, player_orm_to_det
 from mappers.match_response_mapper import match_orm_to_card
 from schemas.pagination import PaginatedResponse
 from schemas.player import PlayerCardResponse, PlayerDetailResponse
+from functools import lru_cache
 from ml.inference.player_similarity_engine import PlayerSimilarityEngine
 
 router = APIRouter(
     prefix="/players",
     tags=["Players"],
 )
-similarity_engine = PlayerSimilarityEngine()
+
+
+@lru_cache
+def get_similarity_engine() -> PlayerSimilarityEngine:
+    return PlayerSimilarityEngine()
 
 
 def _match_player_stats(
@@ -109,18 +114,20 @@ async def get_player_detail(
 
     return player_orm_to_detail(player, team, player_stats)
 
+
 @router.get(
     "/{player_id}/similar",
     summary="Get similar players",
-    description="Returns top 10 similar players"
+    description="Returns top 10 similar players",
 )
-async def get_similar_player(
-    player_id:int
-):
+async def get_similar_player(player_id: int):
     try:
-        return similarity_engine.get_similar_player(player_id)
+        engine = get_similarity_engine()
+        return engine.get_similar_player(player_id)
     except ValueError as e:
         raise HTTPException(400, str(e))
+    except Exception:
+        raise HTTPException(503, "Similarity model unavailable. Please retrain.")
 
 
 @router.get(
