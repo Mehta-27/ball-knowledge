@@ -124,8 +124,8 @@ export default function MatchDetail() {
                                         <td style={{ fontWeight: 600, color: player.rating >= 7.5 ? "var(--primary)" : undefined }}>{player.rating}</td>
                                         <td>{player.goals}</td>
                                         <td>{player.assists}</td>
-                                        <td>{player.xG.toFixed(2)}</td>
-                                        <td>{player.xA.toFixed(2)}</td>
+                                        <td>{player.xG != null ? player.xG.toFixed(2) : "—"}</td>
+                                        <td>{player.xA != null ? player.xA.toFixed(2) : "—"}</td>
                                         <td>{player.minutes_played}'</td>
                                     </tr>
                                 ))}
