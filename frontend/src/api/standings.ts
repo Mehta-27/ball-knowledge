@@ -2,7 +2,7 @@ import axios from "axios";
 import type { Standing, StandingGroup } from "../types/standings";
 
 const API = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: import.meta.env.VITE_API_URL,
 });
 
 export async function getStandings(): Promise<StandingGroup[]> {

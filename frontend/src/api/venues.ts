@@ -2,7 +2,7 @@ import axios from "axios";
 import type { VenueCard, VenueDetail, PaginatedVenues } from "../types/venues";
 
 const API = axios.create({
-    baseURL: "http://127.0.0.1:8000",
+    baseURL: import.meta.env.VITE_API_URL,
 });
 
 export async function getPaginatedVenues(

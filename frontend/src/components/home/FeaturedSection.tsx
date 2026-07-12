@@ -24,7 +24,7 @@ export default function FeaturedSection() {
         if (players.length === 0) return;
 
         const featured = players[0];
-        const resp = await fetch(`http://127.0.0.1:8000/players/${featured.id}`);
+        const resp = await fetch(`${import.meta.env.VITE_API_URL}/players/${featured.id}`);
         const detail = await resp.json();
 
         setPlayer({
