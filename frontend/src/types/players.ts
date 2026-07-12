@@ -38,6 +38,13 @@ export interface PlayerDetail {
     statistics: PlayerStatSummary;
 }
 
+export interface PaginatedPlayers {
+    items: PlayerCard[];
+    total: number;
+    limit: number;
+    offset: number;
+}
+
 export interface SimilarPlayer {
     player_id: number;
     player_name: string;

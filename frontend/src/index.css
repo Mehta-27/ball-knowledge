@@ -2582,6 +2582,72 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.06em;
 }
 
+/* Skeleton loading */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    var(--bg-surface) 80%
+  );
+  background-size: 300% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--image {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    var(--bg-surface) 80%
+  );
+  background-size: 300% 100%;
+  animation: skeletonShimmer 1.5s ease-in-out infinite;
+}
+
+.skeleton--text {
+  border-radius: var(--radius-xs);
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Load more button */
+.players-load-more {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-10);
+}
+
+.players-load-more__btn {
+  padding: var(--space-3) var(--space-8);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.players-load-more__btn:hover:not(:disabled) {
+  color: var(--primary);
+  border-color: var(--primary-dim);
+  background: rgba(0, 214, 143, 0.05);
+  box-shadow: 0 0 20px rgba(0, 214, 143, 0.06);
+}
+
+.players-load-more__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 /* -------------------------------------------
    HOMEPAGE RESPONSIVE
