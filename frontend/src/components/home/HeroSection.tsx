@@ -180,21 +180,21 @@ interface FloatObj {
 }
 
 const floatObjects: FloatObj[] = [
-  // Near layer — sharp, visible
-  { component: FootballSVG, x: "12%", y: "25%", size: 28, blur: 0, opacity: 0.22, duration: 22, delay: 0 },
-  { component: BootSVG, x: "85%", y: "35%", size: 36, blur: 0, opacity: 0.18, duration: 26, delay: -6 },
-  { component: CardSVG, x: "78%", y: "70%", size: 22, blur: 0, opacity: 0.15, duration: 24, delay: -10 },
-  { component: CornerFlagSVG, x: "8%", y: "65%", size: 18, blur: 0, opacity: 0.13, duration: 28, delay: -14 },
+  // Near layer — sharp, clearly visible
+  { component: FootballSVG, x: "12%", y: "25%", size: 32, blur: 0, opacity: 0.40, duration: 22, delay: 0 },
+  { component: BootSVG, x: "85%", y: "35%", size: 40, blur: 0, opacity: 0.30, duration: 26, delay: -6 },
+  { component: CardSVG, x: "78%", y: "70%", size: 26, blur: 0, opacity: 0.25, duration: 24, delay: -10 },
+  { component: CornerFlagSVG, x: "8%", y: "65%", size: 22, blur: 0, opacity: 0.22, duration: 28, delay: -14 },
 
-  // Mid layer — slightly blurred, softer
-  { component: FootballSVG, x: "70%", y: "18%", size: 40, blur: 1.5, opacity: 0.12, duration: 30, delay: -4 },
-  { component: WhistleSVG, x: "22%", y: "75%", size: 44, blur: 1, opacity: 0.10, duration: 28, delay: -12 },
-  { component: BootSVG, x: "55%", y: "80%", size: 32, blur: 1.5, opacity: 0.09, duration: 26, delay: -8 },
+  // Mid layer — visible with soft blur
+  { component: FootballSVG, x: "70%", y: "18%", size: 48, blur: 1.5, opacity: 0.18, duration: 30, delay: -4 },
+  { component: WhistleSVG, x: "22%", y: "75%", size: 50, blur: 1, opacity: 0.16, duration: 28, delay: -12 },
+  { component: BootSVG, x: "55%", y: "80%", size: 38, blur: 1.5, opacity: 0.14, duration: 26, delay: -8 },
 
-  // Far layer — blurred, ghostly but visible
-  { component: FootballSVG, x: "40%", y: "15%", size: 60, blur: 4, opacity: 0.07, duration: 35, delay: -2 },
-  { component: CornerFlagSVG, x: "90%", y: "55%", size: 30, blur: 3, opacity: 0.06, duration: 32, delay: -16 },
-  { component: CardSVG, x: "15%", y: "45%", size: 34, blur: 3.5, opacity: 0.05, duration: 30, delay: -20 },
+  // Far layer — ghostly but perceptible
+  { component: FootballSVG, x: "40%", y: "15%", size: 68, blur: 4, opacity: 0.10, duration: 35, delay: -2 },
+  { component: CornerFlagSVG, x: "90%", y: "55%", size: 36, blur: 3, opacity: 0.08, duration: 32, delay: -16 },
+  { component: CardSVG, x: "15%", y: "45%", size: 40, blur: 3.5, opacity: 0.07, duration: 30, delay: -20 },
 ];
 
 function FloatingObjects() {
