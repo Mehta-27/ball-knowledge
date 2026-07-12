@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 interface PipelineStep {
   label: string;
   description: string;
+  tech: string;
   icon: React.ReactNode;
 }
 
@@ -10,6 +11,7 @@ const steps: PipelineStep[] = [
   {
     label: "FIFA API",
     description: "Official tournament data",
+    tech: "REST",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
@@ -21,6 +23,7 @@ const steps: PipelineStep[] = [
   {
     label: "Scraper",
     description: "Automated extraction",
+    tech: "Python",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
@@ -30,6 +33,7 @@ const steps: PipelineStep[] = [
   {
     label: "PostgreSQL",
     description: "Structured storage",
+    tech: "SQL",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <ellipse cx="12" cy="5" rx="9" ry="3" />
@@ -41,6 +45,7 @@ const steps: PipelineStep[] = [
   {
     label: "ML Engine",
     description: "Cosine similarity",
+    tech: "sklearn",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2v4" />
@@ -57,6 +62,7 @@ const steps: PipelineStep[] = [
   {
     label: "FastAPI",
     description: "35 REST endpoints",
+    tech: "FastAPI",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
@@ -67,6 +73,7 @@ const steps: PipelineStep[] = [
   {
     label: "React",
     description: "This platform",
+    tech: "TypeScript",
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
@@ -112,26 +119,33 @@ export default function EngineSection() {
       </div>
 
       <motion.div
-        className="home-engine__pipeline"
+        className="engine-pipeline"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
+        {/* Connection line behind steps */}
+        <div className="engine-pipeline__line" aria-hidden="true">
+          <div className="engine-pipeline__line-glow" />
+        </div>
+
         {steps.map((step, i) => (
           <motion.div
             key={step.label}
-            className="home-engine-step"
+            className="engine-step"
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="home-engine-step__node">
+            <div className="engine-step__node">
+              <div className="engine-step__node-ring" />
               {step.icon}
             </div>
-            <div className="home-engine-step__label">{step.label}</div>
-            <div className="home-engine-step__description">{step.description}</div>
+            <div className="engine-step__label">{step.label}</div>
+            <div className="engine-step__tech">{step.tech}</div>
+            <div className="engine-step__description">{step.description}</div>
           </motion.div>
         ))}
       </motion.div>

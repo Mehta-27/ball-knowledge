@@ -119,7 +119,7 @@ export default function ExploreSection() {
         </motion.h2>
       </div>
 
-      <div className="home-explore__grid">
+      <div className="explore-grid">
         {cards.map((card, i) => (
           <motion.div
             key={card.to}
@@ -128,15 +128,20 @@ export default function ExploreSection() {
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Link to={card.to} className="home-explore-card">
-              <div className="home-explore-card__icon">
+            <Link to={card.to} className="explore-card">
+              {/* Underglow — RGB keyboard style */}
+              <div className="explore-card__underglow" aria-hidden="true" />
+              {/* Top rim */}
+              <div className="explore-card__rim" aria-hidden="true" />
+
+              <div className="explore-card__icon">
                 {card.icon}
               </div>
-              <div className="home-explore-card__title">{card.title}</div>
-              <div className="home-explore-card__description">{card.description}</div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
-                <span className="home-explore-card__count">{card.count}</span>
-                <span className="home-explore-card__arrow">
+              <div className="explore-card__title">{card.title}</div>
+              <div className="explore-card__description">{card.description}</div>
+              <div className="explore-card__footer">
+                <span className="explore-card__count">{card.count}</span>
+                <span className="explore-card__arrow">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14" />
                     <path d="m12 5 7 7-7 7" />

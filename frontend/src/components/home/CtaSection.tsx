@@ -11,7 +11,10 @@ export default function CtaSection() {
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="home-footer-close__line" />
+        <div className="home-footer-close__line-wrap">
+          <div className="home-footer-close__line" />
+          <div className="home-footer-close__line-glow" />
+        </div>
         <div className="home-footer-close__text">
           Built for the beautiful game.
         </div>
