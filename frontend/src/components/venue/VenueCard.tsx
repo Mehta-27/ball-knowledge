@@ -9,10 +9,17 @@ export default function VenueCard({ venue }: VenueCardProps) {
     const navigate = useNavigate();
 
     return (
-        <div onClick={() => navigate(`/venues/${venue.id}`)}>
-            <h3>{venue.stadium}</h3>
-            <p>{venue.city}</p>
-            <p>{venue.capacity}</p>
+        <div
+            className="card card--clickable"
+            onClick={() => navigate(`/venues/${venue.id}`)}
+        >
+            <h3 className="card__title">{venue.stadium}</h3>
+            <p className="type-caption mt-2">{venue.city}</p>
+            <div className="mt-4">
+                <span className="badge badge--neutral">
+                    {venue.capacity != null ? `${venue.capacity.toLocaleString()} seats` : "Capacity TBD"}
+                </span>
+            </div>
         </div>
-    )
+    );
 }

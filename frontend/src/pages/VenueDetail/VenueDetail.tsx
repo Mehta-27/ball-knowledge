@@ -22,25 +22,49 @@ export default function VenueDetailPage() {
     }, [id]);
 
     if (!venue) {
-        return <h2>Loading...</h2>;
+        return (
+            <div className="state">
+                <div className="spinner" />
+                <p className="state__description">Loading venue...</p>
+            </div>
+        );
     }
 
     return (
-        <>
-            <h1>{venue.stadium}</h1>
+        <div className="section">
+            <div className="flex gap-6 mb-8">
+                {venue.picture_url && (
+                    <img
+                        src={venue.picture_url}
+                        alt={venue.stadium}
+                        className="avatar avatar--xl"
+                        style={{ borderRadius: "var(--radius-lg)", objectFit: "cover" }}
+                    />
+                )}
+                <div className="flex--col gap-2">
+                    <h1 className="type-h1">{venue.stadium}</h1>
+                    <p className="type-caption">{venue.city}, {venue.country}</p>
+                </div>
+            </div>
 
-            <img
-                src={venue.picture_url ?? ""}
-                alt={venue.stadium}
-                width={180}
-            />
-
-            <p>City: {venue.city}</p>
-            <p>Country: {venue.country}</p>
-            <p>Capacity: {venue.capacity}</p>
-            <p>Turf: {venue.turf}</p>
-            <p>Roof: {venue.roof ? "Yes" : "No"}</p>
-            <p>Matches Played: {venue.matches_played}</p>
-        </>
+            <div className="grid grid--4">
+                <div className="stat">
+                    <span className="stat__value">{venue.capacity?.toLocaleString() ?? "N/A"}</span>
+                    <span className="stat__label">Capacity</span>
+                </div>
+                <div className="stat">
+                    <span className="stat__value">{venue.turf ?? "N/A"}</span>
+                    <span className="stat__label">Turf</span>
+                </div>
+                <div className="stat">
+                    <span className="stat__value">{venue.roof ? "Yes" : "No"}</span>
+                    <span className="stat__label">Roof</span>
+                </div>
+                <div className="stat">
+                    <span className="stat__value">{venue.matches_played}</span>
+                    <span className="stat__label">Matches Played</span>
+                </div>
+            </div>
+        </div>
     );
 }

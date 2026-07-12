@@ -9,9 +9,14 @@ export default function TeamCard({ team }: TeamCardProps) {
     const navigate = useNavigate();
 
     return (
-        <div onClick={() => navigate(`/teams/${team.id}`)}>
-            <h3>{team.name}</h3>
-            <p>{team.code}</p>
+        <div
+            className="card card--clickable"
+            onClick={() => navigate(`/teams/${team.id}`)}
+        >
+            <h3 className="card__title">{team.name}</h3>
+            <div className="mt-2">
+                <span className="badge badge--neutral">{team.code}</span>
+            </div>
         </div>
     );
 }

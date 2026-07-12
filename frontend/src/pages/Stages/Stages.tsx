@@ -18,15 +18,19 @@ export default function Stages() {
     }, []);
 
     return (
-        <>
-            <h1>Stages</h1>
+        <div className="section">
+            <div className="section-header">
+                <h1 className="type-h1">Stages</h1>
+            </div>
 
-            {stages.map((stage) => (
-                <StageCard
-                    key={stage.id}
-                    stage={stage}
-                />
-            ))}
-        </>
+            <div className="grid grid--auto-fill">
+                {stages.map((stage) => (
+                    <StageCard
+                        key={stage.id}
+                        stage={stage}
+                    />
+                ))}
+            </div>
+        </div>
     );
 }

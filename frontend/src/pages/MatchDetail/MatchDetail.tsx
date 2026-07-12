@@ -22,62 +22,117 @@ export default function MatchDetail() {
     }, [id]);
 
     if (!match) {
-        return <h2>Loading...</h2>;
+        return (
+            <div className="state">
+                <div className="spinner" />
+                <p className="state__description">Loading match...</p>
+            </div>
+        );
     }
 
     return (
-        <>
-            <h1>{match.home_team} vs {match.away_team}</h1>
+        <div className="section">
+            <h1 className="type-h1 mb-2">{match.home_team} vs {match.away_team}</h1>
 
-            <p>Venue: {match.venue}</p>
-            <p>Stage: {match.stage}</p>
-            <p>Attendance: {match.attendance}</p>
-            <p>Date: {new Date(match.date).toLocaleDateString()}</p>
+            <div className="flex gap-4 mb-8">
+                {match.stage && <span className="badge badge--primary">{match.stage}</span>}
+                <span className="type-caption">
+                    {new Date(match.date).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                    })}
+                </span>
+                {match.venue && <span className="type-caption">{match.venue}</span>}
+                {match.attendance && <span className="type-caption">{match.attendance.toLocaleString()} attendance</span>}
+            </div>
 
-            <h2>Home Team Stats</h2>
-            <p>Ball Possession: {match.home_team_stats?.ball_possession}</p>
-            <p>Expected Goals: {match.home_team_stats?.expected_goals}</p>
-            <p>Total Shots: {match.home_team_stats?.total_shots}</p>
-            <p>Shots on Target: {match.home_team_stats?.shots_on_target}</p>
-            <p>Passes: {match.home_team_stats?.passes}</p>
-            <p>Corners: {match.home_team_stats?.corners}</p>
-            <p>Fouls: {match.home_team_stats?.fouls}</p>
-            <p>Tackles: {match.home_team_stats?.tackles}</p>
-            <p>Interceptions: {match.home_team_stats?.interceptions}</p>
-            <p>Saves: {match.home_team_stats?.saves}</p>
-            <p>Yellow Cards: {match.home_team_stats?.yellow_cards}</p>
-            <p>Red Cards: {match.home_team_stats?.red_cards}</p>
-
-            <h2>Away Team Stats</h2>
-            <p>Ball Possession: {match.away_team_stats?.ball_possession}</p>
-            <p>Expected Goals: {match.away_team_stats?.expected_goals}</p>
-            <p>Total Shots: {match.away_team_stats?.total_shots}</p>
-            <p>Shots on Target: {match.away_team_stats?.shots_on_target}</p>
-            <p>Passes: {match.away_team_stats?.passes}</p>
-            <p>Corners: {match.away_team_stats?.corners}</p>
-            <p>Fouls: {match.away_team_stats?.fouls}</p>
-            <p>Tackles: {match.away_team_stats?.tackles}</p>
-            <p>Interceptions: {match.away_team_stats?.interceptions}</p>
-            <p>Saves: {match.away_team_stats?.saves}</p>
-            <p>Yellow Cards: {match.away_team_stats?.yellow_cards}</p>
-            <p>Red Cards: {match.away_team_stats?.red_cards}</p>
-
-            <h2>Player Stats</h2>
-            {match.player_stats.map((player) => (
-                <div key={player.player_name}>
-                    <h3>{player.player_name}</h3>
-                    <p>Rating: {player.rating}</p>
-                    <p>Goals: {player.goals}</p>
-                    <p>Assists: {player.assists}</p>
-                    <p>Shots: {player.total_shots}</p>
-                    <p>Shots on Target: {player.shots_on_target}</p>
-                    <p>Passes: {player.passes}</p>
-                    <p>Tackles: {player.tackles}</p>
-                    <p>Interceptions: {player.interceptions}</p>
-                    <p>Duels Won: {player.duels_won}</p>
-                    <p>Saves: {player.saves}</p>
+            {match.home_team_stats && (
+                <div className="section">
+                    <h2 className="type-h2 mb-4">Home Team Stats</h2>
+                    <div className="table-wrap">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>{match.home_team}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Ball Possession</td><td>{match.home_team_stats.ball_possession}</td></tr>
+                                <tr><td>Expected Goals</td><td>{match.home_team_stats.expected_goals}</td></tr>
+                                <tr><td>Total Shots</td><td>{match.home_team_stats.total_shots}</td></tr>
+                                <tr><td>Shots on Target</td><td>{match.home_team_stats.shots_on_target}</td></tr>
+                                <tr><td>Passes</td><td>{match.home_team_stats.passes}</td></tr>
+                                <tr><td>Corners</td><td>{match.home_team_stats.corners}</td></tr>
+                                <tr><td>Fouls</td><td>{match.home_team_stats.fouls}</td></tr>
+                                <tr><td>Tackles</td><td>{match.home_team_stats.tackles}</td></tr>
+                                <tr><td>Interceptions</td><td>{match.home_team_stats.interceptions}</td></tr>
+                                <tr><td>Saves</td><td>{match.home_team_stats.saves}</td></tr>
+                                <tr><td>Yellow Cards</td><td>{match.home_team_stats.yellow_cards}</td></tr>
+                                <tr><td>Red Cards</td><td>{match.home_team_stats.red_cards}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            ))}
-        </>
+            )}
+
+            {match.away_team_stats && (
+                <div className="section">
+                    <h2 className="type-h2 mb-4">Away Team Stats</h2>
+                    <div className="table-wrap">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>{match.away_team}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Ball Possession</td><td>{match.away_team_stats.ball_possession}</td></tr>
+                                <tr><td>Expected Goals</td><td>{match.away_team_stats.expected_goals}</td></tr>
+                                <tr><td>Total Shots</td><td>{match.away_team_stats.total_shots}</td></tr>
+                                <tr><td>Shots on Target</td><td>{match.away_team_stats.shots_on_target}</td></tr>
+                                <tr><td>Passes</td><td>{match.away_team_stats.passes}</td></tr>
+                                <tr><td>Corners</td><td>{match.away_team_stats.corners}</td></tr>
+                                <tr><td>Fouls</td><td>{match.away_team_stats.fouls}</td></tr>
+                                <tr><td>Tackles</td><td>{match.away_team_stats.tackles}</td></tr>
+                                <tr><td>Interceptions</td><td>{match.away_team_stats.interceptions}</td></tr>
+                                <tr><td>Saves</td><td>{match.away_team_stats.saves}</td></tr>
+                                <tr><td>Yellow Cards</td><td>{match.away_team_stats.yellow_cards}</td></tr>
+                                <tr><td>Red Cards</td><td>{match.away_team_stats.red_cards}</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            )}
+
+            {match.player_stats.length > 0 && (
+                <div className="section">
+                    <h2 className="type-h2 mb-4">Player Stats</h2>
+                    <div className="grid grid--auto-fill">
+                        {match.player_stats.map((player) => (
+                            <div className="card card--compact" key={player.player_name}>
+                                <h3 className="card__title">{player.player_name}</h3>
+                                <div className="grid grid--3 mt-4" style={{ gap: "var(--space-2)" }}>
+                                    <div className="stat">
+                                        <span className="stat__value">{player.rating}</span>
+                                        <span className="stat__label">Rating</span>
+                                    </div>
+                                    <div className="stat">
+                                        <span className="stat__value">{player.goals}</span>
+                                        <span className="stat__label">Goals</span>
+                                    </div>
+                                    <div className="stat">
+                                        <span className="stat__value">{player.assists}</span>
+                                        <span className="stat__label">Assists</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }

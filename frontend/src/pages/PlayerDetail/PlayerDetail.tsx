@@ -32,32 +32,65 @@ export default function PlayerDetailPage() {
     }, [id]);
 
     if (!player) {
-        return <h2>Loading...</h2>;
+        return (
+            <div className="state">
+                <div className="spinner" />
+                <p className="state__description">Loading player...</p>
+            </div>
+        );
     }
 
     return (
-        <>
-            <h1>{player.name}</h1>
+        <div className="section">
+            <div className="flex gap-6 mb-8">
+                {player.picture_url && (
+                    <img
+                        src={player.picture_url}
+                        alt={player.name}
+                        className="avatar avatar--xl"
+                    />
+                )}
+                <div className="flex--col gap-2">
+                    <h1 className="type-h1">{player.name}</h1>
+                    <div className="flex gap-2 mt-2">
+                        <span className="badge badge--primary badge--lg">{player.position}</span>
+                        <span className="badge badge--neutral">#{player.jersey_number}</span>
+                    </div>
+                </div>
+            </div>
 
-            <img
-                src={player.picture_url ?? ""}
-                alt={player.name}
-                width={180}
-            />
+            <div className="grid grid--4 mb-8">
+                <div className="stat">
+                    <span className="stat__value">{player.country}</span>
+                    <span className="stat__label">Country</span>
+                </div>
+                <div className="stat">
+                    <span className="stat__value">{player.team}</span>
+                    <span className="stat__label">Team</span>
+                </div>
+                <div className="stat">
+                    <span className="stat__value">{player.position}</span>
+                    <span className="stat__label">Position</span>
+                </div>
+                <div className="stat">
+                    <span className="stat__value">{player.age}</span>
+                    <span className="stat__label">Age</span>
+                </div>
+            </div>
 
-            <p>Country: {player.country}</p>
-            <p>Team: {player.team}</p>
-            <p>Position: {player.position}</p>
-            <p>Age: {player.age}</p>
-
-            <h2>Similar Players</h2>
-
-            {similarPlayers.map((player) => (
-                <SimilarPlayerRow
-                    key={player.player_id}
-                    player={player}
-                />
-            ))}
-        </>
+            {similarPlayers.length > 0 && (
+                <div className="section">
+                    <h2 className="type-h2 mb-6">Similar Players</h2>
+                    <div className="flex--col gap-3">
+                        {similarPlayers.map((p) => (
+                            <SimilarPlayerRow
+                                key={p.player_id}
+                                player={p}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }

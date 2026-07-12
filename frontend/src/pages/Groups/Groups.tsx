@@ -18,15 +18,19 @@ export default function Groups() {
     }, []);
 
     return (
-        <>
-            <h1>Groups</h1>
+        <div className="section">
+            <div className="section-header">
+                <h1 className="type-h1">Groups</h1>
+            </div>
 
-            {groups.map((group) => (
-                <GroupCard
-                    key={group.id}
-                    group={group}
-                />
-            ))}
-        </>
+            <div className="grid grid--auto-fill">
+                {groups.map((group) => (
+                    <GroupCard
+                        key={group.id}
+                        group={group}
+                    />
+                ))}
+            </div>
+        </div>
     );
 }

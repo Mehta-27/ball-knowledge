@@ -9,8 +9,11 @@ export default function GroupCard({ group }: GroupCardProps) {
     const navigate = useNavigate();
 
     return (
-        <div onClick={() => navigate(`/groups/${group.id}`)}>
-            <h3>{group.name}</h3>
+        <div
+            className="card card--clickable"
+            onClick={() => navigate(`/groups/${group.id}`)}
+        >
+            <h3 className="card__title">{group.name}</h3>
         </div>
     );
 }

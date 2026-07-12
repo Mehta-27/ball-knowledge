@@ -18,15 +18,19 @@ export default function Standings() {
     }, []);
 
     return (
-        <>
-            <h1>Standings</h1>
+        <div className="section">
+            <div className="section-header">
+                <h1 className="type-h1">Standings</h1>
+            </div>
 
-            {groups.map((group) => (
-                <StandingCard
-                    key={group.group}
-                    group={group}
-                />
-            ))}
-        </>
+            <div className="grid grid--auto-fill">
+                {groups.map((group) => (
+                    <StandingCard
+                        key={group.group}
+                        group={group}
+                    />
+                ))}
+            </div>
+        </div>
     );
 }

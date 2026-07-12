@@ -9,9 +9,14 @@ export default function StageCard({ stage }: StageCardProps) {
     const navigate = useNavigate();
 
     return (
-        <div onClick={() => navigate(`/stages/${stage.id}`)}>
-            <h3>{stage.name}</h3>
-            <p>{stage.type}</p>
+        <div
+            className="card card--clickable"
+            onClick={() => navigate(`/stages/${stage.id}`)}
+        >
+            <h3 className="card__title">{stage.name}</h3>
+            <div className="mt-2">
+                <span className="badge badge--neutral">{stage.type}</span>
+            </div>
         </div>
     );
 }

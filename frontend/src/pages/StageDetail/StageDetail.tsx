@@ -33,24 +33,53 @@ export default function StageDetailPage() {
     }, [id]);
 
     if (!stage) {
-        return <h2>Loading...</h2>;
+        return (
+            <div className="state">
+                <div className="spinner" />
+                <p className="state__description">Loading stage...</p>
+            </div>
+        );
     }
 
     return (
-        <>
-            <h1>{stage.name}</h1>
-            <p>Type: {stage.type}</p>
-            <p>Order: {stage.order}</p>
-            <p>Season ID: {stage.season_id}</p>
-            <p>Start Date: {stage.start_date ?? "N/A"}</p>
-            <p>End Date: {stage.end_date ?? "N/A"}</p>
+        <div className="section">
+            <h1 className="type-h1 mb-2">{stage.name}</h1>
+            <div className="flex gap-3 mb-8">
+                <span className="badge badge--primary">{stage.type}</span>
+                <span className="type-caption">Order: {stage.order}</span>
+                <span className="type-caption">Season ID: {stage.season_id}</span>
+            </div>
 
-            <h2>Matches</h2>
-            {matches.map((m) => (
-                <div key={m.id}>
-                    <p>{m.home} vs {m.away} — {m.score ?? "TBD"}</p>
+            <div className="grid grid--3 mb-8">
+                <div className="stat">
+                    <span className="stat__value">{stage.start_date ?? "N/A"}</span>
+                    <span className="stat__label">Start Date</span>
                 </div>
-            ))}
-        </>
+                <div className="stat">
+                    <span className="stat__value">{stage.end_date ?? "N/A"}</span>
+                    <span className="stat__label">End Date</span>
+                </div>
+                <div className="stat">
+                    <span className="stat__value">{matches.length}</span>
+                    <span className="stat__label">Matches</span>
+                </div>
+            </div>
+
+            {matches.length > 0 && (
+                <div className="section">
+                    <h2 className="type-h2 mb-4">Matches</h2>
+                    <div className="flex--col gap-3">
+                        {matches.map((m) => (
+                            <div className="card card--compact" key={m.id}>
+                                <div className="flex flex--between">
+                                    <span style={{ fontWeight: 500 }}>{m.home} vs {m.away}</span>
+                                    <span className="badge badge--primary">{m.score ?? "TBD"}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+        </div>
     );
 }
