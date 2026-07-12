@@ -1,53 +1,48 @@
 import { motion } from "framer-motion";
 
-interface Feature {
-  title: string;
+interface PipelineStep {
+  label: string;
   description: string;
   icon: React.ReactNode;
-  gradient: string;
 }
 
-const features: Feature[] = [
+const steps: PipelineStep[] = [
   {
-    title: "Player Intelligence",
-    description: "Detailed profiles for every player in the 2026 World Cup. Performance ratings, career stats, and biometric data at your fingertips.",
+    label: "FIFA API",
+    description: "Official tournament data",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-      </svg>
-    ),
-    gradient: "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.03))",
-  },
-  {
-    title: "Team Analysis",
-    description: "Explore all 48 national teams. Confederation data, squad composition, and tactical profiles for every nation competing.",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-      </svg>
-    ),
-    gradient: "linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.03))",
-  },
-  {
-    title: "Match Insights",
-    description: "Complete World Cup match data. Team-level and per-player statistics including xG, xA, possession, and defensive metrics.",
-    icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
         <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
         <path d="M2 12h20" />
       </svg>
     ),
-    gradient: "linear-gradient(135deg, rgba(245,158,11,0.15), rgba(245,158,11,0.03))",
   },
   {
-    title: "AI Player Similarity",
-    description: "Machine learning powered player recommendations. Find players with similar profiles using cosine similarity on 15+ statistical features.",
+    label: "Scraper",
+    description: "Automated extraction",
     icon: (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+      </svg>
+    ),
+  },
+  {
+    label: "PostgreSQL",
+    description: "Structured storage",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3" />
+        <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+        <path d="M3 12A9 3 0 0 0 21 12" />
+      </svg>
+    ),
+  },
+  {
+    label: "ML Engine",
+    description: "Cosine similarity",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M12 2v4" />
         <path d="m16.2 7.8 2.9-2.9" />
         <path d="M18 12h4" />
@@ -58,39 +53,42 @@ const features: Feature[] = [
         <path d="m4.9 4.9 2.9 2.9" />
       </svg>
     ),
-    gradient: "linear-gradient(135deg, rgba(167,139,250,0.15), rgba(167,139,250,0.03))",
+  },
+  {
+    label: "FastAPI",
+    description: "35 REST endpoints",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+      </svg>
+    ),
+  },
+  {
+    label: "React",
+    description: "This platform",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+    ),
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.1 },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
-
-export default function FeaturesSection() {
+export default function EngineSection() {
   return (
-    <section className="home-features">
+    <section className="home-engine">
       <div className="home-section-header">
         <motion.span
-          className="type-overline"
-          style={{ color: "var(--primary)" }}
+          className="home-section-overline"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          Capabilities
+          The Engine
         </motion.span>
         <motion.h2
           className="home-section-title"
@@ -99,29 +97,41 @@ export default function FeaturesSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          Everything you need for football analysis
+          From raw data to insight
         </motion.h2>
+        <motion.p
+          className="home-section-description"
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          An automated pipeline that scrapes, transforms, stores, and serves
+          football intelligence through machine learning.
+        </motion.p>
       </div>
 
       <motion.div
-        className="home-features__grid"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
+        className="home-engine__pipeline"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
-        {features.map((feature) => (
+        {steps.map((step, i) => (
           <motion.div
-            key={feature.title}
-            className="home-feature-card"
-            variants={cardVariants}
-            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            key={step.label}
+            className="home-engine-step"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="home-feature-card__icon" style={{ background: feature.gradient }}>
-              {feature.icon}
+            <div className="home-engine-step__node">
+              {step.icon}
             </div>
-            <h3 className="home-feature-card__title">{feature.title}</h3>
-            <p className="home-feature-card__description">{feature.description}</p>
+            <div className="home-engine-step__label">{step.label}</div>
+            <div className="home-engine-step__description">{step.description}</div>
           </motion.div>
         ))}
       </motion.div>

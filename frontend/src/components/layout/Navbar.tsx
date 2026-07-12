@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 const links = [
   { to: "/players", label: "Players" },
@@ -14,6 +14,23 @@ const links = [
 export default function Navbar() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
+
+  const handleScroll = useCallback(() => {
+    const el = navRef.current;
+    if (!el) return;
+    if (window.scrollY > 20) {
+      el.classList.add("navbar--scrolled");
+    } else {
+      el.classList.remove("navbar--scrolled");
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   const closeMobile = () => setMobileOpen(false);
 
@@ -21,7 +38,7 @@ export default function Navbar() {
     location.pathname === path || location.pathname.startsWith(path + "/");
 
   return (
-    <nav className="navbar">
+    <nav ref={navRef} className="navbar">
       <div className="navbar__inner">
         <Link to="/" className="navbar__brand" onClick={closeMobile}>
           <div className="navbar__brand-icon">

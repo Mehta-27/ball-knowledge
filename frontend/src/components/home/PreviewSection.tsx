@@ -1,198 +1,112 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-function PlayerPreview() {
-  return (
-        <div className="preview-card preview-card--player">
-          <div className="preview-card__glow" style={{ background: "radial-gradient(circle at 30% 20%, rgba(59,130,246,0.12), transparent 70%)" }} />
-          <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
-            <div style={{
-              width: 72, height: 72, borderRadius: "50%",
-              background: "linear-gradient(135deg, var(--bg-elevated), var(--bg-surface))",
-              border: "1px solid var(--border)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "var(--text-muted)", fontSize: "1.5rem",
-            }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-              </svg>
-            </div>
-            <div>
-              <div style={{ fontWeight: 600, fontSize: "1.05rem", marginBottom: 4 }}>Lionel Messi</div>
-              <div style={{ color: "var(--text-muted)", fontSize: "0.8125rem" }}>Forward &middot; Argentina</div>
-              <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
-                <span className="badge badge--primary">#10</span>
-                <span className="badge badge--success">9.2</span>
-              </div>
-            </div>
-          </div>
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "12px", marginTop: 20, paddingTop: 16,
-            borderTop: "1px solid var(--border)",
-          }}>
-            {[
-              { label: "Goals", value: "8" },
-              { label: "Assists", value: "5" },
-              { label: "xG", value: "7.2" },
-            ].map((s) => (
-              <div key={s.label} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--text-primary)" }}>{s.value}</div>
-                <div style={{ fontSize: "0.6875rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-  );
+interface ExploreCard {
+  to: string;
+  title: string;
+  description: string;
+  count: string;
+  icon: React.ReactNode;
 }
 
-function TeamPreview() {
-  return (
-        <div className="preview-card preview-card--team">
-          <div className="preview-card__glow" style={{ background: "radial-gradient(circle at 70% 30%, rgba(16,185,129,0.12), transparent 70%)" }} />
-          <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
-            <div style={{
-              width: 48, height: 48, borderRadius: "var(--radius-md)",
-              background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontWeight: 800, fontSize: "0.875rem", color: "#fff",
-            }}>
-              ARG
-            </div>
-            <div>
-              <div style={{ fontWeight: 600, fontSize: "1.05rem" }}>Argentina</div>
-              <div style={{ color: "var(--text-muted)", fontSize: "0.8125rem" }}>CONMEBOL</div>
-            </div>
-          </div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {["FWD", "MID", "DEF", "GK"].map((pos) => (
-              <span key={pos} className="badge badge--neutral">{pos}</span>
-            ))}
-          </div>
-          <div style={{
-            display: "grid", gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "10px", marginTop: 16, paddingTop: 14,
-            borderTop: "1px solid var(--border)",
-          }}>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: "1.25rem", fontWeight: 700 }}>26</div>
-              <div style={{ fontSize: "0.6875rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Squad</div>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={{ fontSize: "1.25rem", fontWeight: 700 }}>2</div>
-              <div style={{ fontSize: "0.6875rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>Stage</div>
-            </div>
-          </div>
-        </div>
-  );
-}
+const cards: ExploreCard[] = [
+  {
+    to: "/players",
+    title: "Players",
+    description: "1,162 player profiles with performance ratings, career stats, and AI-powered similarity analysis.",
+    count: "1,162 profiles",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+      </svg>
+    ),
+  },
+  {
+    to: "/teams",
+    title: "Teams",
+    description: "48 national teams with squad composition, confederation data, and tactical profiles.",
+    count: "48 teams",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+      </svg>
+    ),
+  },
+  {
+    to: "/matches",
+    title: "Matches",
+    description: "104 matches with team-level and per-player statistics including xG, possession, and defensive metrics.",
+    count: "104 matches",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </svg>
+    ),
+  },
+  {
+    to: "/standings",
+    title: "Standings",
+    description: "Group and knockout stage standings with points, goal difference, and qualification status.",
+    count: "12 groups",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+        <path d="M4 22h16" />
+        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+      </svg>
+    ),
+  },
+  {
+    to: "/venues",
+    title: "Venues",
+    description: "16 host stadiums with capacity, location, and match allocation data.",
+    count: "16 stadiums",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 21h18" />
+        <path d="M5 21V7l8-4v18" />
+        <path d="M19 21V11l-6-4" />
+        <path d="M9 9h.01" />
+        <path d="M9 13h.01" />
+        <path d="M9 17h.01" />
+      </svg>
+    ),
+  },
+  {
+    to: "/groups",
+    title: "Groups",
+    description: "12 groups with team composition, match schedules, and qualification scenarios.",
+    count: "12 groups",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1" />
+        <rect x="14" y="3" width="7" height="7" rx="1" />
+        <rect x="3" y="14" width="7" height="7" rx="1" />
+        <rect x="14" y="14" width="7" height="7" rx="1" />
+      </svg>
+    ),
+  },
+];
 
-function MatchPreview() {
+export default function ExploreSection() {
   return (
-        <div className="preview-card preview-card--match">
-          <div className="preview-card__glow" style={{ background: "radial-gradient(circle at 50% 0%, rgba(245,158,11,0.1), transparent 70%)" }} />
-          <div style={{ textAlign: "center", marginBottom: 12 }}>
-            <span className="badge badge--warning" style={{ marginBottom: 12, display: "inline-flex" }}>Group Stage</span>
-          </div>
-          <div style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            gap: 20, marginBottom: 16,
-          }}>
-            <div style={{ textAlign: "center" }}>
-              <div style={{
-                width: 44, height: 44, borderRadius: "var(--radius-md)",
-                background: "linear-gradient(135deg, #60a5fa, #2563eb)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 800, fontSize: "0.75rem", color: "#fff", margin: "0 auto 6px",
-              }}>BRA</div>
-              <div style={{ fontSize: "0.8125rem", fontWeight: 500 }}>Brazil</div>
-            </div>
-            <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--text-primary)", letterSpacing: "-0.02em" }}>
-              2 — 1
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <div style={{
-                width: 44, height: 44, borderRadius: "var(--radius-md)",
-                background: "linear-gradient(135deg, #f87171, #dc2626)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 800, fontSize: "0.75rem", color: "#fff", margin: "0 auto 6px",
-              }}>GER</div>
-              <div style={{ fontSize: "0.8125rem", fontWeight: 500 }}>Germany</div>
-            </div>
-          </div>
-          <div style={{ display: "flex", justifyContent: "center", gap: 24 }}>
-            {[
-              { label: "xG", value: "1.8" },
-              { label: "Poss", value: "58%" },
-              { label: "Shots", value: "14" },
-            ].map((s) => (
-              <div key={s.label} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "1rem", fontWeight: 700 }}>{s.value}</div>
-                <div style={{ fontSize: "0.6875rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-  );
-}
-
-function SimilarityPreview() {
-  return (
-        <div className="preview-card preview-card--similarity">
-          <div className="preview-card__glow" style={{ background: "radial-gradient(circle at 50% 50%, rgba(167,139,250,0.1), transparent 70%)" }} />
-          <div style={{ textAlign: "center", marginBottom: 16 }}>
-            <div style={{ fontSize: "0.6875rem", color: "var(--text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>AI Powered</div>
-            <div style={{ fontSize: "1.125rem", fontWeight: 600 }}>Similar Players</div>
-          </div>
-          <div className="flex--col" style={{ gap: 10 }}>
-            {[
-              { name: "Kylian Mbappé", pos: "FWD", sim: "94.2%", color: "var(--success)" },
-              { name: "Vinicius Jr", pos: "FWD", sim: "91.8%", color: "var(--success)" },
-              { name: "Bukayo Saka", pos: "FWD", sim: "88.5%", color: "var(--primary)" },
-            ].map((p) => (
-              <div key={p.name} style={{
-                display: "flex", alignItems: "center", justifyContent: "space-between",
-                padding: "8px 12px", borderRadius: "var(--radius-md)",
-                background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)",
-              }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{
-                    width: 32, height: 32, borderRadius: "50%",
-                    background: "var(--bg-elevated)", display: "flex",
-                    alignItems: "center", justifyContent: "center",
-                    fontSize: "0.75rem", color: "var(--text-muted)",
-                  }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                      <circle cx="9" cy="7" r="4" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: "0.875rem", fontWeight: 500 }}>{p.name}</div>
-                    <div style={{ fontSize: "0.75rem", color: "var(--text-muted)" }}>{p.pos}</div>
-                  </div>
-                </div>
-                <span className="badge badge--success">{p.sim}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-  );
-}
-
-export default function PreviewSection() {
-  return (
-    <section className="home-preview">
+    <section className="home-explore">
       <div className="home-section-header">
         <motion.span
-          className="type-overline"
-          style={{ color: "var(--primary)" }}
+          className="home-section-overline"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          Platform Preview
+          Explore
         </motion.span>
         <motion.h2
           className="home-section-title"
@@ -201,43 +115,37 @@ export default function PreviewSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         >
-          A glimpse of what's inside
+          Dive into the data
         </motion.h2>
       </div>
 
-      <div className="home-preview__grid">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <PlayerPreview />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <TeamPreview />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <MatchPreview />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <SimilarityPreview />
-        </motion.div>
+      <div className="home-explore__grid">
+        {cards.map((card, i) => (
+          <motion.div
+            key={card.to}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Link to={card.to} className="home-explore-card">
+              <div className="home-explore-card__icon">
+                {card.icon}
+              </div>
+              <div className="home-explore-card__title">{card.title}</div>
+              <div className="home-explore-card__description">{card.description}</div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
+                <span className="home-explore-card__count">{card.count}</span>
+                <span className="home-explore-card__arrow">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
