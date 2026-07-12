@@ -101,39 +101,59 @@ export default function MatchDetail() {
                 </div>
             )}
 
-            {match.player_stats.length > 0 && (
-                <div className="section">
-                    <h2 className="type-h2 mb-4">Player Performance</h2>
-                    <div className="table-wrap">
-                        <table className="table-premium">
-                            <thead>
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Rating</th>
-                                    <th>Goals</th>
-                                    <th>Assists</th>
-                                    <th>xG</th>
-                                    <th>xA</th>
-                                    <th>Minutes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {match.player_stats.map((player) => (
-                                    <tr key={player.player_name}>
-                                        <td style={{ fontWeight: 500, color: "var(--text-primary)" }}>{player.player_name}</td>
-                                        <td style={{ fontWeight: 600, color: player.rating >= 7.5 ? "var(--primary)" : undefined }}>{player.rating}</td>
-                                        <td>{player.goals}</td>
-                                        <td>{player.assists}</td>
-                                        <td>{player.xG != null ? player.xG.toFixed(2) : "—"}</td>
-                                        <td>{player.xA != null ? player.xA.toFixed(2) : "—"}</td>
-                                        <td>{player.minutes_played}'</td>
+            {match.player_stats.length > 0 && (() => {
+                const active = match.player_stats.filter((p) => (p.minutes_played ?? 0) > 0);
+                if (active.length === 0) return null;
+                return (
+                    <div className="section">
+                        <h2 className="type-h2 mb-4">Player Performance</h2>
+                        <div className="table-wrap">
+                            <table className="table-premium">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th>Min</th>
+                                        <th>Rating</th>
+                                        <th>Goals</th>
+                                        <th>Assists</th>
+                                        <th>xG</th>
+                                        <th>xA</th>
+                                        <th>Shots</th>
+                                        <th>SOT</th>
+                                        <th>Touches</th>
+                                        <th>Passes</th>
+                                        <th>Tackles</th>
+                                        <th>Int</th>
+                                        <th>Duels W</th>
+                                        <th>Saves</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    {active.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0)).map((player) => (
+                                        <tr key={player.player_name}>
+                                            <td style={{ fontWeight: 500, color: "var(--text-primary)" }}>{player.player_name}</td>
+                                            <td>{player.minutes_played != null ? `${Math.round(player.minutes_played)}'` : "—"}</td>
+                                            <td style={{ fontWeight: 600, color: (player.rating ?? 0) >= 7.5 ? "var(--primary)" : undefined }}>{player.rating != null ? player.rating.toFixed(1) : "—"}</td>
+                                            <td>{player.goals ?? "—"}</td>
+                                            <td>{player.assists ?? "—"}</td>
+                                            <td>{player.xG != null ? player.xG.toFixed(2) : "—"}</td>
+                                            <td>{player.xA != null ? player.xA.toFixed(2) : "—"}</td>
+                                            <td>{player.total_shots ?? "—"}</td>
+                                            <td>{player.shots_on_target ?? "—"}</td>
+                                            <td>{player.touches ?? "—"}</td>
+                                            <td>{player.passes ?? "—"}</td>
+                                            <td>{player.tackles ?? "—"}</td>
+                                            <td>{player.interceptions ?? "—"}</td>
+                                            <td>{player.duels_won ?? "—"}</td>
+                                            <td>{player.saves ?? "—"}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-            )}
+                );
+            })()}
         </div>
     );
 }

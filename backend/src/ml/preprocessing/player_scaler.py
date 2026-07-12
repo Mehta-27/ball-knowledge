@@ -15,18 +15,63 @@ class PlayerScaler:
         ]
         numerical_features = [
             "minutes_played",
+            # Attacking
             "goals",
             "assists",
             "xg",
             "xa",
+            "xg_non_penalty",
+            "xg_plus_xa",
             "total_shots",
             "shots_on_target",
+            "shots_off_target",
+            "shot_accuracy",
+            "blocked_shots",
+            "shots_woodwork",
+            # Possession
             "touches",
+            "touches_opposition_box",
             "accurate_passes",
+            "accurate_crosses",
+            "long_balls_accurate",
+            "passes_into_final_third",
+            "corners",
+            # Chance Creation
+            "chances_created",
+            "big_chances_created",
+            # Defensive
             "tackles",
             "interceptions",
+            "defensive_actions",
+            "clearances",
+            "headed_clearances",
+            "recoveries",
             "duels_won",
+            "duels_lost",
+            "ground_duels_won",
+            "aerials_won",
+            # Ball Carrying
             "dribbles_succeeded",
+            "dribbled_past",
+            "dispossessed",
+            "was_fouled",
+            # Discipline
+            "fouls",
+            "offsides",
+            "errors_led_to_goal",
+            "player_throws",
+            # Goalkeeper
+            "saves",
+            "saves_inside_box",
+            "goals_conceded",
+            "goals_prevented",
+            "keeper_diving_saves",
+            "keeper_high_claims",
+            "keeper_sweeper_actions",
+            "punches",
+            "xg_on_target_faced",
+            "xg_on_target_variant",
+            # Rating
             "rating",
         ]
 
