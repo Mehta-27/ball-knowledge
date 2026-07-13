@@ -120,6 +120,7 @@ async def get_player_detail(
     player_repo: PlayerRepository = Depends(get_player_repository),
     team_repo: TeamRepository = Depends(get_team_repository),
     stat_repo: PlayerMatchStatRepository = Depends(get_player_match_stat_repository),
+    mapping_repo: PlayerMappingRepository = Depends(get_player_mapping_repository),
 ):
     player = player_repo.get_by_id(player_id)
     if player is None:
@@ -129,8 +130,12 @@ async def get_player_detail(
     if team is None:
         raise HTTPException(404, "Player has no team")
 
-    team_stats = stat_repo.get_by_team_id(player.team_id)
-    player_stats = _match_player_stats(player.name, player.short_name, team_stats)
+    mapping = mapping_repo.get_by_fifa_id(player_id)
+    if mapping:
+        player_stats = stat_repo.get_by_fotmob_player_id(mapping.fotmob_player_id)
+    else:
+        team_stats = stat_repo.get_by_team_id(player.team_id)
+        player_stats = _match_player_stats(player.name, player.short_name, team_stats)
 
     return player_orm_to_detail(player, team, player_stats)
 
@@ -161,8 +166,11 @@ async def get_player_stats(
     player_repo: PlayerRepository = Depends(get_player_repository),
     team_repo: TeamRepository = Depends(get_team_repository),
     stat_repo: PlayerMatchStatRepository = Depends(get_player_match_stat_repository),
+    mapping_repo: PlayerMappingRepository = Depends(get_player_mapping_repository),
 ):
-    return await get_player_detail(player_id, player_repo, team_repo, stat_repo)
+    return await get_player_detail(
+        player_id, player_repo, team_repo, stat_repo, mapping_repo
+    )
 
 
 @router.get(
