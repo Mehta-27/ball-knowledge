@@ -32,6 +32,7 @@ export interface TeamStatResponse {
 }
 
 export interface PlayerStatInMatch {
+    fotmob_player_id: number;
     player_name: string;
     is_goalkeeper: boolean
     rating: number

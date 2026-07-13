@@ -40,3 +40,12 @@ export async function searchPlayers(query: string): Promise<PlayerCard[]> {
 
     return response.data;
 }
+
+export async function resolvePlayerIds(
+    fotmobIds: number[],
+): Promise<Record<string, number>> {
+    const response = await API.get("/players/resolve", {
+        params: { fotmob_ids: fotmobIds.join(",") },
+    });
+    return response.data;
+}

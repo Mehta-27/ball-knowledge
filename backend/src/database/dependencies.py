@@ -9,6 +9,7 @@ from repositories.group_repository import GroupRepository
 from repositories.standing_repository import StandingRepository
 from repositories.team_match_stat_repository import TeamMatchStatRepository
 from repositories.player_match_stat_repository import PlayerMatchStatRepository
+from repositories.player_mapping_repository import PlayerMappingRepository
 from fastapi import Depends
 
 
@@ -54,3 +55,7 @@ def get_team_match_stat_repository(db: Session = Depends(get_db)):
 
 def get_player_match_stat_repository(db: Session = Depends(get_db)):
     return PlayerMatchStatRepository(db)
+
+
+def get_player_mapping_repository(db: Session = Depends(get_db)):
+    return PlayerMappingRepository(db)

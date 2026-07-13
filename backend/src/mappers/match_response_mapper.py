@@ -52,6 +52,7 @@ def _team_stat_to_response(
 
 def _player_stat_to_response(stat: PlayerMatchStatORM) -> PlayerStatInMatch:
     return PlayerStatInMatch(
+        fotmob_player_id=stat.fotmob_player_id,
         player_name=stat.player_name,
         is_goalkeeper=stat.is_goalkeeper,
         rating=stat.rating,

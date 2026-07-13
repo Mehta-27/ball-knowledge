@@ -29,6 +29,7 @@ class TeamStatResponse(BaseModel):
 
 
 class PlayerStatInMatch(BaseModel):
+    fotmob_player_id: int
     player_name: str
     is_goalkeeper: bool
     rating: float | None = None

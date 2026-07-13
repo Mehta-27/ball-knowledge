@@ -1,13 +1,54 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getPlayer, getSimilarPlayers } from "../../api/players";
 import SimilarPlayerRow from "../../components/player/SimilarPlayerRow";
 
 import type { PlayerDetail } from "../../types/players";
 import type { SimilarPlayer } from "../../types/players";
 
+const statSections = [
+    {
+        title: "Attacking",
+        stats: [
+            { key: "goals", label: "Goals" },
+            { key: "assists", label: "Assists" },
+            { key: "xG", label: "xG" },
+            { key: "xA", label: "xA" },
+            { key: "shots", label: "Shots" },
+            { key: "shots_on_target", label: "Shots on Target" },
+        ],
+    },
+    {
+        title: "Possession & Passing",
+        stats: [
+            { key: "passes", label: "Passes" },
+            { key: "touches", label: "Touches" },
+        ],
+    },
+    {
+        title: "Defensive",
+        stats: [
+            { key: "tackles", label: "Tackles" },
+            { key: "interceptions", label: "Interceptions" },
+            { key: "duels_won", label: "Duels Won" },
+        ],
+    },
+    {
+        title: "Overall",
+        stats: [
+            { key: "matches", label: "Matches" },
+            { key: "starts", label: "Starts" },
+            { key: "minutes", label: "Minutes" },
+            { key: "rating", label: "Avg Rating" },
+            { key: "clean_sheets", label: "Clean Sheets" },
+            { key: "saves", label: "Saves" },
+        ],
+    },
+];
+
 export default function PlayerDetailPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [player, setPlayer] = useState<PlayerDetail | null>(null);
     const [similarPlayers, setSimilarPlayers] = useState<SimilarPlayer[]>([]);
@@ -38,6 +79,8 @@ export default function PlayerDetailPage() {
             </div>
         );
     }
+
+    const stats = player.statistics;
 
     return (
         <div className="section">
@@ -77,9 +120,43 @@ export default function PlayerDetailPage() {
                 </div>
             </div>
 
-            {similarPlayers.length > 0 ? (
+            <div className="section">
+                <h2 className="type-h2 mb-4">World Cup Stats</h2>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "var(--space-4)" }}>
+                    {statSections.map((section) => (
+                        <div key={section.title} className="card card--compact">
+                            <h3 style={{ fontSize: "0.8rem", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-muted)", marginBottom: "var(--space-3)" }}>
+                                {section.title}
+                            </h3>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+                                {section.stats.map(({ key, label }) => {
+                                    const val = stats[key as keyof typeof stats];
+                                    const display = typeof val === "number"
+                                        ? key === "minutes"
+                                            ? `${Math.round(val)}"`
+                                            : key === "rating" || key === "xG" || key === "xA"
+                                                ? val.toFixed(2)
+                                                : val
+                                        : val;
+                                    return (
+                                        <div key={key} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "var(--space-1) 0" }}>
+                                            <span style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>{label}</span>
+                                            <span style={{ fontWeight: 600, fontSize: "0.95rem", color: "var(--text-primary)" }}>{display ?? "—"}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {similarPlayers.length > 0 && (
                 <div className="section">
-                    <h2 className="type-h2 mb-6">Similar Players</h2>
+                    <h2 className="type-h2 mb-4">Similar Players</h2>
+                    <p className="text-muted mb-4" style={{ fontSize: "0.85rem" }}>
+                        Based on per-90 minute statistical profile across the World Cup
+                    </p>
                     <div className="flex--col gap-3">
                         {similarPlayers.map((p) => (
                             <SimilarPlayerRow
@@ -88,11 +165,6 @@ export default function PlayerDetailPage() {
                             />
                         ))}
                     </div>
-                </div>
-            ) : (
-                <div className="section">
-                    <h2 className="type-h2 mb-6">Similar Players</h2>
-                    <p className="text-muted">Similarity data not available for this player.</p>
                 </div>
             )}
         </div>

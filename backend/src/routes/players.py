@@ -4,11 +4,13 @@ from repositories.player_repository import PlayerRepository
 from repositories.team_repository import TeamRepository
 from repositories.player_match_stat_repository import PlayerMatchStatRepository
 from repositories.match_repository import MatchRepository
+from repositories.player_mapping_repository import PlayerMappingRepository
 from database.dependencies import (
     get_player_repository,
     get_team_repository,
     get_player_match_stat_repository,
     get_match_repository,
+    get_player_mapping_repository,
 )
 from mappers.player_response_mapper import player_orm_to_card, player_orm_to_detail
 from mappers.match_response_mapper import match_orm_to_card
@@ -87,6 +89,24 @@ async def search_players(
 ):
     players = repo.search(q)
     return [player_orm_to_card(p) for p in players]
+
+
+@router.get(
+    "/resolve",
+    summary="Resolve FotMob player IDs to FIFA player IDs",
+    description="Given a list of FotMob player IDs, returns the mapped FIFA player IDs.",
+)
+async def resolve_player_ids(
+    fotmob_ids: str = Query(..., description="Comma-separated FotMob player IDs"),
+    mapping_repo: PlayerMappingRepository = Depends(get_player_mapping_repository),
+):
+    ids = [int(x.strip()) for x in fotmob_ids.split(",") if x.strip()]
+    result = {}
+    for fotmob_id in ids:
+        mapping = mapping_repo.get_by_fotmob_id(fotmob_id)
+        if mapping:
+            result[str(fotmob_id)] = mapping.fifa_player_id
+    return result
 
 
 @router.get(

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { getMatch } from "../../api/matches";
-import type { MatchDetail } from "../../types/matches";
+import { resolvePlayerIds } from "../../api/players";
+import type { MatchDetail, PlayerStatInMatch } from "../../types/matches";
 
 const statLabels: Record<string, string> = {
     ball_possession: "Possession",
@@ -22,16 +23,37 @@ const statKeys = Object.keys(statLabels);
 
 export default function MatchDetail() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [match, setMatch] = useState<MatchDetail | null>(null);
+    const [idMap, setIdMap] = useState<Record<string, number>>({});
 
     useEffect(() => {
         async function fetchMatch() {
             if (!id) return;
             const data = await getMatch(id);
             setMatch(data);
+
+            const fotmobIds = [
+                ...new Set(data.player_stats.map((p) => p.fotmob_player_id)),
+            ];
+            if (fotmobIds.length > 0) {
+                try {
+                    const resolved = await resolvePlayerIds(fotmobIds);
+                    setIdMap(resolved);
+                } catch {
+                    setIdMap({});
+                }
+            }
         }
         fetchMatch();
     }, [id]);
+
+    function handlePlayerClick(player: PlayerStatInMatch) {
+        const fifaId = idMap[String(player.fotmob_player_id)];
+        if (fifaId) {
+            navigate(`/players/${fifaId}`);
+        }
+    }
 
     if (!match) {
         return (
@@ -45,6 +67,8 @@ export default function MatchDetail() {
             </div>
         );
     }
+
+    const active = match.player_stats.filter((p) => (p.minutes_played ?? 0) > 0);
 
     return (
         <div className="section">
@@ -101,37 +125,49 @@ export default function MatchDetail() {
                 </div>
             )}
 
-            {match.player_stats.length > 0 && (() => {
-                const active = match.player_stats.filter((p) => (p.minutes_played ?? 0) > 0);
-                if (active.length === 0) return null;
-                return (
-                    <div className="section">
-                        <h2 className="type-h2 mb-4">Player Performance</h2>
-                        <div className="table-wrap">
-                            <table className="table-premium">
-                                <thead>
-                                    <tr>
-                                        <th>Player</th>
-                                        <th>Min</th>
-                                        <th>Rating</th>
-                                        <th>Goals</th>
-                                        <th>Assists</th>
-                                        <th>xG</th>
-                                        <th>xA</th>
-                                        <th>Shots</th>
-                                        <th>SOT</th>
-                                        <th>Touches</th>
-                                        <th>Passes</th>
-                                        <th>Tackles</th>
-                                        <th>Int</th>
-                                        <th>Duels W</th>
-                                        <th>Saves</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {active.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0)).map((player) => (
-                                        <tr key={player.player_name}>
-                                            <td style={{ fontWeight: 500, color: "var(--text-primary)" }}>{player.player_name}</td>
+            {active.length > 0 && (
+                <div className="section">
+                    <h2 className="type-h2 mb-4">Player Performance</h2>
+                    <p className="text-muted mb-4" style={{ fontSize: "0.85rem" }}>
+                        Click any player to view their full World Cup stats and similar players
+                    </p>
+                    <div className="table-wrap">
+                        <table className="table-premium">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Min</th>
+                                    <th>Rating</th>
+                                    <th>Goals</th>
+                                    <th>Assists</th>
+                                    <th>xG</th>
+                                    <th>xA</th>
+                                    <th>Shots</th>
+                                    <th>SOT</th>
+                                    <th>Touches</th>
+                                    <th>Passes</th>
+                                    <th>Tackles</th>
+                                    <th>Int</th>
+                                    <th>Duels W</th>
+                                    <th>Saves</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {active.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0)).map((player) => {
+                                    const hasLink = !!idMap[String(player.fotmob_player_id)];
+                                    return (
+                                        <tr
+                                            key={player.fotmob_player_id}
+                                            onClick={() => handlePlayerClick(player)}
+                                            style={{
+                                                cursor: hasLink ? "pointer" : "default",
+                                                opacity: hasLink ? 1 : 0.7,
+                                            }}
+                                            className={hasLink ? "card--clickable" : undefined}
+                                        >
+                                            <td style={{ fontWeight: 500, color: hasLink ? "var(--primary)" : "var(--text-primary)" }}>
+                                                {player.player_name}
+                                            </td>
                                             <td>{player.minutes_played != null ? `${Math.round(player.minutes_played)}'` : "—"}</td>
                                             <td style={{ fontWeight: 600, color: (player.rating ?? 0) >= 7.5 ? "var(--primary)" : undefined }}>{player.rating != null ? player.rating.toFixed(1) : "—"}</td>
                                             <td>{player.goals ?? "—"}</td>
@@ -147,13 +183,13 @@ export default function MatchDetail() {
                                             <td>{player.duels_won ?? "—"}</td>
                                             <td>{player.saves ?? "—"}</td>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
                     </div>
-                );
-            })()}
+                </div>
+            )}
         </div>
     );
 }
