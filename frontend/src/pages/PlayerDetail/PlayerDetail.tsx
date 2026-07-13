@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getPlayer, getSimilarPlayers } from "../../api/players";
 import SimilarPlayerRow from "../../components/player/SimilarPlayerRow";
 
@@ -48,7 +48,6 @@ const statSections = [
 
 export default function PlayerDetailPage() {
     const { id } = useParams();
-    const navigate = useNavigate();
 
     const [player, setPlayer] = useState<PlayerDetail | null>(null);
     const [similarPlayers, setSimilarPlayers] = useState<SimilarPlayer[]>([]);
