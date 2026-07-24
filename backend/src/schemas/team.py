@@ -15,7 +15,7 @@ class TeamDetailResponse(BaseModel):
     continent: str
     confederation: str
     flag_url: str
-    current_stage: str
+    current_stage: str | None = None
 
 
 class PlayerResponse(BaseModel):

@@ -3,6 +3,8 @@ from models.team import Team
 
 LOCALE = "en"
 LIMIT = 200
+
+
 class FIFAScraper:
     BASE_URL = "https://cxm-api.fifa.com/fifaplusweb/api"
 
@@ -27,10 +29,11 @@ class FIFAScraper:
                 endpoint = section["entryEndpoint"]
                 break
         if endpoint is None:
-            raise ValueError("Could not find the teamsModule endpoint in the FIFA page response.")
+            raise ValueError(
+                "Could not find the teamsModule endpoint in the FIFA page response."
+            )
         url = f"{self.BASE_URL}{endpoint}&limit=200"
 
-        
         response = self.http.get(url)
         data = response.json()
 
@@ -42,9 +45,9 @@ class FIFAScraper:
 
         if len(teams) != 48:
             raise ValueError(f"Expected 48 teams, received {len(teams)}.")
-        
-        teams_list: list[Team] = []   
-            
+
+        teams_list: list[Team] = []
+
         for team in teams_list:
             if not team.name:
                 raise ValueError("Team name is missing.")
@@ -59,7 +62,7 @@ class FIFAScraper:
                 code=team_data["teamFlag"].split("/")[-1],
                 continent=CONFEDERATION_TO_CONTINENT.get(team_data["confederationId"]),
                 confederation=team_data["confederationId"],
-                current_stage= team_data["stage"],
+                current_stage=team_data.get("stage"),
                 coach=None,
                 rank=None,
                 flag_url=team_data["teamFlag"],
@@ -67,12 +70,13 @@ class FIFAScraper:
 
             teams_list.append(team)
 
-        #duplicate check and length check    
+        # duplicate check and length check
         team_ids = {team.id for team in teams_list}
 
         if len(team_ids) != len(teams_list):
             raise ValueError("Duplicate team IDs detected.")
         return teams_list
+
 
 CONFEDERATION_TO_CONTINENT = {
     "UEFA": "Europe",
@@ -80,5 +84,5 @@ CONFEDERATION_TO_CONTINENT = {
     "CONCACAF": "North America",
     "CAF": "Africa",
     "AFC": "Asia",
-    "OFC": "Oceania"
+    "OFC": "Oceania",
 }
